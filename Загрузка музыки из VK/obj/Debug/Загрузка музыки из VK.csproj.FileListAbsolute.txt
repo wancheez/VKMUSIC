@@ -1,0 +1,48 @@
+c:\users\иван\documents\visual studio 2013\Projects\Загрузка музыки из VK\Загрузка музыки из VK\bin\Debug\Загрузка музыки из VK.exe.config
+C:\Users\Иван\documents\visual studio 2013\Projects\Загрузка музыки из VK\Загрузка музыки из VK\bin\Debug\Загрузка музыки из VK.exe
+C:\Users\Иван\documents\visual studio 2013\Projects\Загрузка музыки из VK\Загрузка музыки из VK\bin\Debug\Загрузка музыки из VK.pdb
+C:\Users\Иван\documents\visual studio 2013\Projects\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\MainWindow.baml
+C:\Users\Иван\documents\visual studio 2013\Projects\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\MainWindow.g.cs
+C:\Users\Иван\documents\visual studio 2013\Projects\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\App.g.cs
+C:\Users\Иван\documents\visual studio 2013\Projects\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Загрузка музыки из VK_MarkupCompile.cache
+C:\Users\Иван\documents\visual studio 2013\Projects\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Загрузка музыки из VK.g.resources
+C:\Users\Иван\documents\visual studio 2013\Projects\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Загрузка_музыки_из_VK.Properties.Resources.resources
+C:\Users\Иван\documents\visual studio 2013\Projects\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Загрузка музыки из VK.csproj.GenerateResource.Cache
+C:\Users\Иван\documents\visual studio 2013\Projects\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Загрузка музыки из VK.exe
+C:\Users\Иван\documents\visual studio 2013\Projects\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Загрузка музыки из VK.pdb
+C:\Users\Иван\documents\visual studio 2013\Projects\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Auth.baml
+C:\Users\Иван\documents\visual studio 2013\Projects\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Auth.g.cs
+C:\Users\Иван\documents\visual studio 2013\Projects\Загрузка музыки из VK\Загрузка музыки из VK\bin\Debug\VKAPI.cs
+C:\Users\Иван\documents\visual studio 2013\Projects\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Загрузка музыки из VK.csprojResolveAssemblyReference.cache
+C:\Users\Алексей\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\bin\Debug\Загрузка музыки из VK.exe.config
+C:\Users\Алексей\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Загрузка музыки из VK.exe
+C:\Users\Алексей\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Загрузка музыки из VK.pdb
+C:\Users\Алексей\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\bin\Debug\VKAPI.cs
+C:\Users\Алексей\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\bin\Debug\Загрузка музыки из VK.exe
+C:\Users\Алексей\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\bin\Debug\Загрузка музыки из VK.pdb
+C:\Users\Алексей\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Загрузка музыки из VK.csprojResolveAssemblyReference.cache
+C:\Users\Алексей\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Auth.baml
+C:\Users\Алексей\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\MainWindow.baml
+C:\Users\Алексей\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Auth.g.cs
+C:\Users\Алексей\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\MainWindow.g.cs
+C:\Users\Алексей\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\App.g.cs
+C:\Users\Алексей\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Загрузка музыки из VK_MarkupCompile.cache
+C:\Users\Алексей\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Загрузка музыки из VK.g.resources
+C:\Users\Алексей\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Загрузка_музыки_из_VK.Properties.Resources.resources
+C:\Users\Алексей\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Загрузка музыки из VK.csproj.GenerateResource.Cache
+C:\Users\Иван\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\bin\Debug\Загрузка музыки из VK.exe.config
+C:\Users\Иван\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Загрузка музыки из VK.exe
+C:\Users\Иван\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Загрузка музыки из VK.pdb
+C:\Users\Иван\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\bin\Debug\VKAPI.cs
+C:\Users\Иван\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\bin\Debug\Загрузка музыки из VK.exe
+C:\Users\Иван\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\bin\Debug\Загрузка музыки из VK.pdb
+C:\Users\Иван\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Загрузка музыки из VK.csprojResolveAssemblyReference.cache
+C:\Users\Иван\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Auth.baml
+C:\Users\Иван\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\MainWindow.baml
+C:\Users\Иван\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Auth.g.cs
+C:\Users\Иван\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\MainWindow.g.cs
+C:\Users\Иван\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\App.g.cs
+C:\Users\Иван\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Загрузка музыки из VK_MarkupCompile.cache
+C:\Users\Иван\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Загрузка музыки из VK.g.resources
+C:\Users\Иван\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Загрузка_музыки_из_VK.Properties.Resources.resources
+C:\Users\Иван\Google Диск\Загрузка музыки из VK\Загрузка музыки из VK\obj\Debug\Загрузка музыки из VK.csproj.GenerateResource.Cache

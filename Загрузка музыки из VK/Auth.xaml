@@ -1,0 +1,9 @@
+﻿<Window x:Class="Загрузка_музыки_из_VK.Auth"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Auth" Height="300" Width="300">
+    <Grid>
+        <WebBrowser x:Name="webBrowser_Auth" Loaded="webBrowser_Auth_Loaded" LoadCompleted="webBrowser_Auth_LoadCompleted" />
+
+    </Grid>
+</Window>
