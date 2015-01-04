@@ -319,8 +319,11 @@ namespace Загрузка_музыки_из_VK
 
         private void playSelectedAudio()
         {
-            mediaPlayer.Source = new Uri(currentAudioList[dataGridView1.SelectedIndex].source + ".mp3");
-            mediaPlayer.Play();
+            if (dataGridView1.SelectedIndex != -1)
+            {
+                mediaPlayer.Source = new Uri(currentAudioList[dataGridView1.SelectedIndex].source + ".mp3");
+                mediaPlayer.Play();
+            }
         }
 
         private void ButtonPause_Click(object sender, RoutedEventArgs e)
