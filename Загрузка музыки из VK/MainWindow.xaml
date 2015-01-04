@@ -7,7 +7,7 @@
         <Grid.Resources>
             <!--DataTemplate for Published Date column defined in Grid.Resources.  PublishDate is a property on the ItemsSource of type DateTime -->
             <DataTemplate x:Key="ButtonTemplate" >
-                <Button Background="White" Click="ButtonPlay_Click">
+                <Button Background="White" Click="ButtonPlay_Click" BorderBrush="Transparent">
                     <Image Source="Resources/play-active.png" Width="20" Height="20"/>
                 </Button>
             </DataTemplate>
@@ -27,7 +27,7 @@
             <RowDefinition Height="77*"/>
         </Grid.RowDefinitions>
 
-        <DataGrid x:Name="dataGridView1" Grid.Row="0" Margin="10,90,9.502,36" Grid.ColumnSpan="4" AutoGenerateColumns="False" >
+        <DataGrid x:Name="dataGridView1" Grid.Row="0" Margin="10,90,9.502,36" Grid.ColumnSpan="4" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn  Header="Artist" Width="*" Binding="{Binding title}" />
                 <DataGridTextColumn Header="Name" Width="*" Binding="{Binding artist}" />
@@ -79,7 +79,7 @@
         <Button BorderBrush="Transparent" Background="Transparent" Content="{StaticResource IconTriangle}" HorizontalAlignment="Left" Margin="14,0,0,65" Width="42" Height="32" VerticalAlignment="Bottom" Grid.RowSpan="2" Click="ButtonPlay_Click" Grid.Column="1"/>
 
         <Button BorderBrush="Transparent" Background="Transparent" Content="{StaticResource IconPause}" HorizontalAlignment="Left" Margin="77,0,0,65"  Width="42" Height="32" VerticalAlignment="Bottom" Grid.RowSpan="2" Click="ButtonPause_Click" Grid.Column="1" Grid.ColumnSpan="2"/>
-        <Button BorderBrush="Transparent" Background="Transparent" Content="{StaticResource IconStop}" HorizontalAlignment="Left" Margin="0.084,0,0,65" Width="42"  Height="32" VerticalAlignment="Bottom" Grid.RowSpan="2" Grid.Column="3"/>
+        <Button BorderBrush="Transparent" Background="Transparent" Content="{StaticResource IconStop}" HorizontalAlignment="Left" Margin="0.084,0,0,65" Width="42"  Height="32" VerticalAlignment="Bottom" Grid.RowSpan="2" Grid.Column="3" Click="ButtonStop_Click"/>
         <Slider  Margin="10,0,10.502,10" Grid.ColumnSpan="4" Height="18" VerticalAlignment="Bottom"/>
 
     </Grid>
