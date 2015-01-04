@@ -63,9 +63,9 @@ namespace Загрузка_музыки_из_VK
            
             client.DownloadFileCompleted +=client_DownloadFileCompleted;
             client.DownloadProgressChanged += client_DownloadProgressChanged;
-            if (File.Exists("userID.txt"))
+            if (File.Exists(Environment.GetEnvironmentVariable("appdata") + "\\VKPLAYER\\userID.txt"))
             {
-                StreamReader streamReader = new StreamReader("userID.txt");
+                StreamReader streamReader = new StreamReader(Environment.GetEnvironmentVariable("appdata") + "\\VKPLAYER\\userID.txt");
                 string str1 = "";
                 string str2 = "";
 
