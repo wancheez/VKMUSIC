@@ -56,6 +56,7 @@ namespace Загрузка_музыки_из_VK
         List<audioItems> audioToDownload = new List<audioItems>();//Список аудиозаписей, которые нужно скачать
         WebClient client;
         bool isPaused = false; //Стоит ли музыка на паузе
+        int num = 0; //Переменная используется, чтобы при окончании трека запускался следующий. В переменной хранится смещение от первой композиции
 
         public MainWindow()
         {
@@ -328,8 +329,7 @@ namespace Загрузка_музыки_из_VK
             if (dataGridView1.SelectedIndex != -1)
             {
                 mediaPlayer.Source = new Uri(currentAudioList[dataGridView1.SelectedIndex].source + ".mp3");
-                mediaPlayer.Play();
-                TimeSlider.Maximum = mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+                mediaPlayer.Play();               
             }
         }
 
@@ -346,6 +346,14 @@ namespace Загрузка_музыки_из_VK
         private void ButtonStop_Click(object sender, RoutedEventArgs e)
         {
             mediaPlayer.Stop();
+        }
+
+        
+        private void mediaPlayer_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            num++;
+            mediaPlayer.Source = new Uri(currentAudioList[dataGridView1.SelectedIndex+num].source + ".mp3");
+            mediaPlayer.Play();
         }
 
     }

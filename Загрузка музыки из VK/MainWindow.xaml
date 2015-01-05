@@ -27,7 +27,7 @@
             <RowDefinition Height="77*"/>
         </Grid.RowDefinitions>
 
-        <DataGrid x:Name="dataGridView1" Grid.Row="0" Margin="10,71,9.502,41" Grid.ColumnSpan="4" AutoGenerateColumns="False" >
+        <DataGrid x:Name="dataGridView1" Grid.Row="0" Margin="10,71,9.502,41" Grid.ColumnSpan="4" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn  Header="Artist" Width="*" Binding="{Binding title}" />
                 <DataGridTextColumn Header="Name" Width="*" Binding="{Binding artist}" />
@@ -41,7 +41,7 @@
 			UnloadedBehavior="Manual"
 			Volume="1"
 			Visibility="Hidden" 
-                      />
+            MediaEnded="mediaPlayer_MediaEnded"          />
         <Button Grid.Column="3" x:Name="button_auth" Content="Login" Margin="0,11,9.502,0" VerticalAlignment="Top" RenderTransformOrigin="-3.735,0.36" Click="button_auth_Click" Height="27" Background="Tomato" HorizontalAlignment="Right" Width="126" FontSize="16"/>
 
         <Label Grid.Column="0" Grid.Row="0" x:Name="label_welcome" Content="User:" Margin="10,4,140.502,0" VerticalAlignment="Top" FontSize="18" Grid.ColumnSpan="4"/>
