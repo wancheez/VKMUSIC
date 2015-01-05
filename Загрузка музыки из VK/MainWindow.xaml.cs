@@ -55,6 +55,7 @@ namespace Загрузка_музыки_из_VK
         List<audioItems> currentAudioList; //Список записей, которые сейчас отображены
         List<audioItems> audioToDownload = new List<audioItems>();//Список аудиозаписей, которые нужно скачать
         WebClient client;
+        bool isPaused = false; //Стоит ли музыка на паузе
 
         public MainWindow()
         {
@@ -319,16 +320,32 @@ namespace Загрузка_музыки_из_VK
 
         private void playSelectedAudio()
         {
+            if (isPaused)
+            {
+                mediaPlayer.Play();
+                isPaused = false;
+            } else 
             if (dataGridView1.SelectedIndex != -1)
             {
                 mediaPlayer.Source = new Uri(currentAudioList[dataGridView1.SelectedIndex].source + ".mp3");
                 mediaPlayer.Play();
+                TimeSlider.Maximum = mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
             }
         }
 
         private void ButtonPause_Click(object sender, RoutedEventArgs e)
         {
             mediaPlayer.Pause();
+            isPaused = true;
+        }
+
+        private void TimerSlider_ValueChanged(object sender,  RoutedPropertyChangedEventArgs<double> e)
+        {
+        }
+
+        private void ButtonStop_Click(object sender, RoutedEventArgs e)
+        {
+            mediaPlayer.Stop();
         }
 
     }
