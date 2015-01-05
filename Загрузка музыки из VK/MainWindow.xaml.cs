@@ -331,10 +331,5 @@ namespace Загрузка_музыки_из_VK
             mediaPlayer.Pause();
         }
 
-        private void ButtonStop_Click(object sender, RoutedEventArgs e)
-        {
-            mediaPlayer.Stop();
-        }
-
     }
 }
