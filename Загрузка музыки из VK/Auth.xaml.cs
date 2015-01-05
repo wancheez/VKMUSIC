@@ -142,7 +142,9 @@ namespace Загрузка_музыки_из_VK
                     main.userId = userId;
                     main.accessToken = accessToken;
                     main.isAuthorised = true;//Авторизация прошла успешна. Метка для основной формы
-                    StreamWriter write_text = new StreamWriter("userID.txt", false);
+                    if (!Directory.Exists(Environment.GetEnvironmentVariable("appdata") + "\\VKPLAYER"))
+                        Directory.CreateDirectory(Environment.GetEnvironmentVariable("appdata") + "\\VKPLAYER");
+                    StreamWriter write_text = new StreamWriter(Environment.GetEnvironmentVariable("appdata") + "\\VKPLAYER\\userID.txt", false);
                     //write_text = main.file.AppendText();
                     write_text.WriteLine(accessToken.ToString());
                     write_text.WriteLine(userId.ToString());
