@@ -78,7 +78,7 @@
 
         <Button BorderBrush="Transparent" Background="Transparent" Content="{StaticResource IconPause}" HorizontalAlignment="Left" Margin="57,0,0,40"  Width="42" Height="32" VerticalAlignment="Bottom" Click="ButtonPause_Click" Grid.Row="1"/>
         <Button BorderBrush="Transparent" Background="Transparent" Content="{StaticResource IconStop}" HorizontalAlignment="Left" Margin="104,0,0,40" Width="42"  Height="32" VerticalAlignment="Bottom" Grid.Row="1" Click="ButtonStop_Click"/>
-        <Slider x:Name="TimeSlider" Margin="151,0,8.502,30" Grid.ColumnSpan="4" Height="32" VerticalAlignment="Bottom" Grid.Row="1" ValueChanged="TimerSlider_ValueChanged"/>
+        <Slider x:Name="TimeSlider" Margin="151,0,8.502,30" Grid.ColumnSpan="4" Height="32" VerticalAlignment="Bottom" Grid.Row="1" ValueChanged="TimerSlider_ValueChanged" SmallChange="1" AutoToolTipPlacement="TopLeft"/>
 
     </Grid>
 </Window>

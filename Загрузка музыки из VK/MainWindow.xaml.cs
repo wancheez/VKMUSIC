@@ -58,10 +58,15 @@ namespace Загрузка_музыки_из_VK
         bool isPaused = false; //Стоит ли музыка на паузе
         int num = 0; //Переменная используется, чтобы при окончании трека запускался следующий. В переменной хранится смещение от первой композиции
 
+
+         
+
+
         public MainWindow()
         {
             InitializeComponent();
             client = new WebClient();
+           
            
             client.DownloadFileCompleted +=client_DownloadFileCompleted;
             client.DownloadProgressChanged += client_DownloadProgressChanged;
@@ -174,6 +179,7 @@ namespace Загрузка_музыки_из_VK
                     ite.title = GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("title"));
                     ite.artist = GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("artist"));
                     ite.duration = GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("duration"));
+                   
                     ite.source = GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("url"));
                     
                     currentAudioList.Add(ite);
@@ -329,6 +335,10 @@ namespace Загрузка_музыки_из_VK
             if (dataGridView1.SelectedIndex != -1)
             {
                 mediaPlayer.Source = new Uri(currentAudioList[dataGridView1.SelectedIndex].source + ".mp3");
+                // Задание длины трека в слайдер 
+              //  TimeSlider.Maximum = Convert.ToInt16(ite.duration);
+                // текущий трек dataGridView1.SelectedIndex;
+                TimeSlider.Maximum = Convert.ToInt32(currentAudioList[dataGridView1.SelectedIndex].duration);
                 mediaPlayer.Play();               
             }
         }
@@ -341,7 +351,16 @@ namespace Загрузка_музыки_из_VK
 
         private void TimerSlider_ValueChanged(object sender,  RoutedPropertyChangedEventArgs<double> e)
         {
+            TimeSlider.Value = mediaPlayer.Position.Seconds;
+            isPaused = true;
+           
+            TimeSpan time = new TimeSpan(0, 0, Convert.ToInt32(Math.Round(TimeSlider.Value)));
+           mediaPlayer.Position = time;
+            TimeSlider.UpdateLayout();
+
         }
+
+
 
         private void ButtonStop_Click(object sender, RoutedEventArgs e)
         {
