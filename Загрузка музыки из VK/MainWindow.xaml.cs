@@ -60,6 +60,7 @@ namespace Загрузка_музыки_из_VK
         int num = 0; //Переменная используется, чтобы при окончании трека запускался следующий. В переменной хранится смещение от первой композиции
         DispatcherTimer timer = new DispatcherTimer(); //Таймер для работы слайдера и вывода времени проигрывания. Пока проще выхода не придумал
         TimeSpan TotalTime;
+        bool movemusic = true; // флаг на перемотку музыки 
 
         public MainWindow()
         {
@@ -362,6 +363,12 @@ namespace Загрузка_музыки_из_VK
         private void TimerSlider_ValueChanged(object sender,  RoutedPropertyChangedEventArgs<double> e)
         {
            //Здесь изменение позиции воспроизведения при перетаскивании слайдера
+            if(movemusic)
+            {
+                TimeSpan time = new TimeSpan(Convert.ToInt32(TimeSlider.Value) / 3600, Convert.ToInt32(TimeSlider.Value) / 60, Convert.ToInt32(Math.Round(TimeSlider.Value)));
+                mediaPlayer.Position = time;
+               
+            }
         }
 
 
@@ -395,15 +402,17 @@ namespace Загрузка_музыки_из_VK
         void timer_Tick(object sender, EventArgs e)
         {
             // Check if the audio finished calculate it's total time
-            if (mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds > 0)
-            {
-                if (TotalTime.TotalSeconds > 0)
-                {
+            movemusic = false;
+           // if (mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds > 0)
+          //  {
+           //     if (TotalTime.TotalSeconds > 0)
+           //     {
                     // Updating time slider
                     TimeSlider.Value = mediaPlayer.Position.TotalSeconds;
                     TimeLabel.Content = TimeSpan.FromSeconds(mediaPlayer.Position.TotalSeconds).ToString("mm':'ss");
-                }
-            }
+            //    }
+          //  }
+            movemusic = true;
         } 
     }
 }
