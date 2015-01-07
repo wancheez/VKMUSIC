@@ -180,7 +180,10 @@ namespace Загрузка_музыки_из_VK
                     audioItems ite = new audioItems();
                     ite.title = GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("title"));
                     ite.artist = GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("artist"));
-                    ite.duration = GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("duration"));
+                    String t_dur = GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("duration"));
+                    int t_min = Convert.ToInt32(t_dur) / 60;
+                    int t_sec = Convert.ToInt32(t_dur) - t_min*60;
+                    ite.duration = Convert.ToString(t_min) + ":" + Convert.ToString(t_sec).PadLeft(2,'0');
                    
                     ite.source = GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("url"));
                     
@@ -234,7 +237,10 @@ namespace Загрузка_музыки_из_VK
                     audioItems ite = new audioItems();
                     ite.title = GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("title"));
                     ite.artist = GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("artist"));
-                    ite.duration = GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("duration"));
+                    String t_dur = GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("duration"));
+                    int t_min = Convert.ToInt32(t_dur) / 60;
+                    int t_sec = Convert.ToInt32(t_dur) - t_min * 60;
+                    ite.duration = Convert.ToString(t_min) + ":" + Convert.ToString(t_sec).PadLeft(2, '0');
                     ite.source = GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("url"));
                     currentAudioList.Add(ite);
                 }
@@ -336,11 +342,13 @@ namespace Загрузка_музыки_из_VK
             } else 
             if (dataGridView1.SelectedIndex != -1)
             {
-                mediaPlayer.Source = new Uri(currentAudioList[dataGridView1.SelectedIndex].source + ".mp3");
+                mediaPlayer.Source = new Uri((String)(currentAudioList[dataGridView1.SelectedIndex].source + ".mp3").Replace("https","http"));
                 // Задание длины трека в слайдер 
-              //  TimeSlider.Maximum = Convert.ToInt16(ite.duration);
+                // TimeSlider.Maximum = Convert.ToInt16(ite.duration);
                 // текущий трек dataGridView1.SelectedIndex;
-                TimeSlider.Maximum = Convert.ToInt32(currentAudioList[dataGridView1.SelectedIndex].duration);
+                String mins = currentAudioList[dataGridView1.SelectedIndex].duration.Substring(0, currentAudioList[dataGridView1.SelectedIndex].duration.IndexOf(":"));
+                String secs = currentAudioList[dataGridView1.SelectedIndex].duration.Substring(currentAudioList[dataGridView1.SelectedIndex].duration.IndexOf(":")+1);
+                TimeSlider.Maximum = Convert.ToInt32(mins)*60 + Convert.ToInt32(secs);
                 mediaPlayer.Play();               
             }
         }
@@ -367,7 +375,7 @@ namespace Загрузка_музыки_из_VK
         private void mediaPlayer_MediaEnded(object sender, RoutedEventArgs e)
         {
             num++;
-            mediaPlayer.Source = new Uri(currentAudioList[dataGridView1.SelectedIndex+num].source + ".mp3");
+            mediaPlayer.Source = new Uri((String)(currentAudioList[dataGridView1.SelectedIndex+num].source + ".mp3").Replace("https","http"));
             mediaPlayer.Play();
         }
 
