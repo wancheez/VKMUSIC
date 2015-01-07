@@ -35,6 +35,7 @@ namespace Загрузка_музыки_из_VK
             public DataTemplate buttonPlay { get; set; }
         public audioItems()
         {
+            //Страшные вещи для создание кнопки в таблице. ПОСМОТРЕВNМ CХОДRТ С УМА
             string xaml = "<DataTemplate><Button Content=\"кнопко\" /></DataTemplate>";
             var sr = new MemoryStream(Encoding.UTF8.GetBytes(xaml));
             var pc = new ParserContext();
@@ -60,7 +61,6 @@ namespace Загрузка_музыки_из_VK
         int num = 0; //Переменная используется, чтобы при окончании трека запускался следующий. В переменной хранится смещение от первой композиции
         DispatcherTimer timer = new DispatcherTimer(); //Таймер для работы слайдера и вывода времени проигрывания. Пока проще выхода не придумал
         TimeSpan TotalTime;
-        bool movemusic = true; // флаг на перемотку музыки 
 
         public MainWindow()
         {
@@ -71,8 +71,10 @@ namespace Загрузка_музыки_из_VK
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += timer_Tick;
            
+            //Привязываем события к клиенту
             client.DownloadFileCompleted +=client_DownloadFileCompleted;
             client.DownloadProgressChanged += client_DownloadProgressChanged;
+            //Авторизация
             if (File.Exists(Environment.GetEnvironmentVariable("appdata") + "\\VKPLAYER\\userID.txt"))
             {
                 StreamReader streamReader = new StreamReader(Environment.GetEnvironmentVariable("appdata") + "\\VKPLAYER\\userID.txt");
@@ -123,6 +125,11 @@ namespace Загрузка_музыки_из_VK
             }
         }
        
+        /// <summary>
+        /// Кнопка авторизации
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_auth_Click(object sender, RoutedEventArgs e)
         {
             if (!isAuthorised)
@@ -138,6 +145,11 @@ namespace Загрузка_музыки_из_VK
                 auth.Show();                     
         }
 
+        /// <summary>
+        /// Закрыли окно авторизации
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void auth_Closed(object sender, EventArgs e)
         {
             
@@ -196,7 +208,7 @@ namespace Загрузка_музыки_из_VK
             else MessageBox.Show("Сначала нужно авторизоваться", "Ошибка", MessageBoxButton.OK,MessageBoxImage.Exclamation);
         }
 
-        //Функция позволяет избежать ошибок, если запрашиваемое поле пусто
+        //Функция позволяет избежать ошибок, если запрашиваемое поле пусто. Это для XML
         public string GetDataFromXmlNode(XmlNode input)
         {
             if (input == null || String.IsNullOrEmpty(input.InnerText))
@@ -251,6 +263,11 @@ namespace Загрузка_музыки_из_VK
             else MessageBox.Show("Сначала нужно авторизоваться", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
 
+        /// <summary>
+        /// Кнопка Запросить следущую страницу с записями
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_moreOffset_Click(object sender, EventArgs e)
         {
             currentOffset+=N;
@@ -264,6 +281,11 @@ namespace Загрузка_музыки_из_VK
             }
         }
 
+       /// <summary>
+       /// Кнопка запросить предыдущую страницу с записями
+       /// </summary>
+       /// <param name="sender"></param>
+       /// <param name="e"></param>
         private void button_lessOffset_Click(object sender, EventArgs e)
         {
             if(currentOffset>10)
@@ -309,6 +331,12 @@ namespace Загрузка_музыки_из_VK
             }
             else MessageBox.Show("Сначала нужно авторизоваться", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
+
+        /// <summary>
+        /// Событие происходит при завершении загрузки музыки
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             audioToDownload.RemoveAt(0);
@@ -334,7 +362,11 @@ namespace Загрузка_музыки_из_VK
             playSelectedAudio();
         }
 
-        private void playSelectedAudio()
+        /// <summary>
+        /// Воспроизводит выбранную аудио-запись, либо запись, смещнную от первой 
+        /// </summary>
+        /// <param name="i">Показывает, на сколько смещена запись от первой</param>
+        private void playSelectedAudio(int i=0)
         {
             if (isPaused)
             {
@@ -343,9 +375,7 @@ namespace Загрузка_музыки_из_VK
             } else 
             if (dataGridView1.SelectedIndex != -1)
             {
-                mediaPlayer.Source = new Uri((String)(currentAudioList[dataGridView1.SelectedIndex].source + ".mp3").Replace("https","http"));
-                // Задание длины трека в слайдер 
-                // TimeSlider.Maximum = Convert.ToInt16(ite.duration);
+                mediaPlayer.Source = new Uri((String)(currentAudioList[dataGridView1.SelectedIndex + i].source + ".mp3").Replace("https", "http"));
                 // текущий трек dataGridView1.SelectedIndex;
                 String mins = currentAudioList[dataGridView1.SelectedIndex].duration.Substring(0, currentAudioList[dataGridView1.SelectedIndex].duration.IndexOf(":"));
                 String secs = currentAudioList[dataGridView1.SelectedIndex].duration.Substring(currentAudioList[dataGridView1.SelectedIndex].duration.IndexOf(":")+1);
@@ -360,19 +390,6 @@ namespace Загрузка_музыки_из_VK
             isPaused = true;
         }
 
-        private void TimerSlider_ValueChanged(object sender,  RoutedPropertyChangedEventArgs<double> e)
-        {
-           //Здесь изменение позиции воспроизведения при перетаскивании слайдера
-            if(movemusic)
-            {
-                TimeSpan time = new TimeSpan(Convert.ToInt32(TimeSlider.Value) / 3600, Convert.ToInt32(TimeSlider.Value) / 60, Convert.ToInt32(Math.Round(TimeSlider.Value)));
-                mediaPlayer.Position = time;
-               
-            }
-        }
-
-
-
         private void ButtonStop_Click(object sender, RoutedEventArgs e)
         {
             mediaPlayer.Stop();
@@ -382,8 +399,7 @@ namespace Загрузка_музыки_из_VK
         private void mediaPlayer_MediaEnded(object sender, RoutedEventArgs e)
         {
             num++;
-            mediaPlayer.Source = new Uri((String)(currentAudioList[dataGridView1.SelectedIndex+num].source + ".mp3").Replace("https","http"));
-            mediaPlayer.Play();
+            playSelectedAudio(num);
         }
 
         private void mediaPlayer_MediaOpened(object sender, RoutedEventArgs e)
@@ -400,19 +416,16 @@ namespace Загрузка_музыки_из_VK
         /// <param name="sender"></param>
         /// <param name="e"></param>
         void timer_Tick(object sender, EventArgs e)
-        {
-            // Check if the audio finished calculate it's total time
-            movemusic = false;
-           // if (mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds > 0)
-          //  {
-           //     if (TotalTime.TotalSeconds > 0)
-           //     {
-                    // Updating time slider
+        {          
                     TimeSlider.Value = mediaPlayer.Position.TotalSeconds;
                     TimeLabel.Content = TimeSpan.FromSeconds(mediaPlayer.Position.TotalSeconds).ToString("mm':'ss");
-            //    }
-          //  }
-            movemusic = true;
+        }
+
+        private void TimeSlider_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            mediaPlayer.Pause();
+            mediaPlayer.Position = TimeSpan.FromSeconds(TimeSlider.Value);
+            mediaPlayer.Play();
         } 
     }
 }
