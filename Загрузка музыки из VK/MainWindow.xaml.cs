@@ -16,6 +16,7 @@ using System.Xml;
 using System.IO;
 using System.Net;
 using System.Windows.Markup;
+using System.Windows.Threading;
 
 namespace Загрузка_музыки_из_VK
 {
@@ -57,16 +58,17 @@ namespace Загрузка_музыки_из_VK
         WebClient client;
         bool isPaused = false; //Стоит ли музыка на паузе
         int num = 0; //Переменная используется, чтобы при окончании трека запускался следующий. В переменной хранится смещение от первой композиции
-
-
-         
-
+        DispatcherTimer timer = new DispatcherTimer(); //Таймер для работы слайдера и вывода времени проигрывания. Пока проще выхода не придумал
+        TimeSpan TotalTime;
 
         public MainWindow()
         {
             InitializeComponent();
             client = new WebClient();
            
+            //Инициализация таймера
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += timer_Tick;
            
             client.DownloadFileCompleted +=client_DownloadFileCompleted;
             client.DownloadProgressChanged += client_DownloadProgressChanged;
@@ -118,8 +120,8 @@ namespace Загрузка_музыки_из_VK
                 }
                 streamReader.Close();
             }
-        }    
-
+        }
+       
         private void button_auth_Click(object sender, RoutedEventArgs e)
         {
             if (!isAuthorised)
@@ -351,13 +353,7 @@ namespace Загрузка_музыки_из_VK
 
         private void TimerSlider_ValueChanged(object sender,  RoutedPropertyChangedEventArgs<double> e)
         {
-            TimeSlider.Value = mediaPlayer.Position.Seconds;
-            isPaused = true;
-           
-            TimeSpan time = new TimeSpan(0, 0, Convert.ToInt32(Math.Round(TimeSlider.Value)));
-           mediaPlayer.Position = time;
-            TimeSlider.UpdateLayout();
-
+           //Здесь изменение позиции воспроизведения при перетаскивании слайдера
         }
 
 
@@ -375,5 +371,31 @@ namespace Загрузка_музыки_из_VK
             mediaPlayer.Play();
         }
 
+        private void mediaPlayer_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            TotalTime = mediaPlayer.NaturalDuration.TimeSpan;
+            timer.Start();
+            
+
+        }
+
+        /// <summary>
+        /// Событие тика таймера
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void timer_Tick(object sender, EventArgs e)
+        {
+            // Check if the audio finished calculate it's total time
+            if (mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds > 0)
+            {
+                if (TotalTime.TotalSeconds > 0)
+                {
+                    // Updating time slider
+                    TimeSlider.Value = mediaPlayer.Position.TotalSeconds;
+                    TimeLabel.Content = TimeSpan.FromSeconds(mediaPlayer.Position.TotalSeconds).ToString("mm':'ss");
+                }
+            }
+        } 
     }
 }

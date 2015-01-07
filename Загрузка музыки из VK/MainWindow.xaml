@@ -41,7 +41,8 @@
 			UnloadedBehavior="Manual"
 			Volume="1"
 			Visibility="Hidden" 
-            MediaEnded="mediaPlayer_MediaEnded"          />
+            MediaEnded="mediaPlayer_MediaEnded"      
+            MediaOpened="mediaPlayer_MediaOpened"/>
         <Button Grid.Column="3" x:Name="button_auth" Content="Login" Margin="0,11,9.502,0" VerticalAlignment="Top" RenderTransformOrigin="-3.735,0.36" Click="button_auth_Click" Height="27" Background="Tomato" HorizontalAlignment="Right" Width="126" FontSize="16"/>
 
         <Label Grid.Column="0" Grid.Row="0" x:Name="label_welcome" Content="User:" Margin="10,4,140.502,0" VerticalAlignment="Top" FontSize="18" Grid.ColumnSpan="4"/>
@@ -78,7 +79,8 @@
 
         <Button BorderBrush="Transparent" Background="Transparent" Content="{StaticResource IconPause}" HorizontalAlignment="Left" Margin="57,0,0,40"  Width="42" Height="32" VerticalAlignment="Bottom" Click="ButtonPause_Click" Grid.Row="1"/>
         <Button BorderBrush="Transparent" Background="Transparent" Content="{StaticResource IconStop}" HorizontalAlignment="Left" Margin="104,0,0,40" Width="42"  Height="32" VerticalAlignment="Bottom" Grid.Row="1" Click="ButtonStop_Click"/>
-        <Slider x:Name="TimeSlider" Margin="151,0,8.502,30" Grid.ColumnSpan="4" Height="32" VerticalAlignment="Bottom" Grid.Row="1" ValueChanged="TimerSlider_ValueChanged" SmallChange="1" AutoToolTipPlacement="TopLeft"/>
+        <Slider x:Name="TimeSlider" Margin="151,0,76.502,30" Grid.ColumnSpan="4" Height="35" VerticalAlignment="Bottom" Grid.Row="1" ValueChanged="TimerSlider_ValueChanged" Maximum="1" AutoToolTipPlacement="TopLeft"/>
+        <Label x:Name="TimeLabel" Content="00:00" Grid.Column="3" HorizontalAlignment="Right" Margin="0,0,0.502,0" Grid.Row="1" VerticalAlignment="Top" FontFamily="Consolas" FontSize="24"/>
 
     </Grid>
 </Window>
