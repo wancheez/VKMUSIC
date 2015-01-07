@@ -184,7 +184,6 @@ namespace Загрузка_музыки_из_VK
                     int t_min = Convert.ToInt32(t_dur) / 60;
                     int t_sec = Convert.ToInt32(t_dur) - t_min*60;
                     ite.duration = Convert.ToString(t_min) + ":" + Convert.ToString(t_sec).PadLeft(2,'0');
-                   
                     ite.source = GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("url"));
                     
                     currentAudioList.Add(ite);
