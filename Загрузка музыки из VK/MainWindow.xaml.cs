@@ -17,6 +17,7 @@ using System.IO;
 using System.Net;
 using System.Windows.Markup;
 using System.Windows.Threading;
+using System.Windows.Media.Animation;
 
 namespace Загрузка_музыки_из_VK
 {
@@ -190,22 +191,37 @@ namespace Загрузка_музыки_из_VK
                 audioXml = vkApiClass.getAudio(userId, count, offset);
                 nodeList = audioXml.SelectNodes("response/audio");
                 for(int i=0; i<nodeList.Count; i++){
-                    audioItems ite = new audioItems();
-                    ite.title = GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("title"));
-                    ite.artist = GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("artist"));
+                    audioItems audioIte = new audioItems();
+                    audioIte.title = ProcessSpecialSymbols(GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("title")));
+                    audioIte.artist = ProcessSpecialSymbols(GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("artist")));
                     String t_dur = GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("duration"));
                     int t_min = Convert.ToInt32(t_dur) / 60;
                     int t_sec = Convert.ToInt32(t_dur) - t_min*60;
-                    ite.duration = Convert.ToString(t_min) + ":" + Convert.ToString(t_sec).PadLeft(2,'0');
+                    audioIte.duration = Convert.ToString(t_min) + ":" + Convert.ToString(t_sec).PadLeft(2,'0');
                    
-                    ite.source = GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("url"));
+                    audioIte.source = GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("url"));
                     
-                    currentAudioList.Add(ite);
+                    currentAudioList.Add(audioIte);
                 }
                 dataGridView1.ItemsSource = currentAudioList;
 
             }
             else MessageBox.Show("Сначала нужно авторизоваться", "Ошибка", MessageBoxButton.OK,MessageBoxImage.Exclamation);
+        }
+
+        /// <summary>
+        /// Исправляет специальные символы из xml на их обычный эквивалент
+        /// </summary>
+        /// <param name="sourceString">Исходная строка</param>
+        /// <returns></returns>
+        private string ProcessSpecialSymbols(string sourceString)
+        {           
+            sourceString = sourceString.Replace("&lt;", "<");
+            sourceString = sourceString.Replace("&gt;", ">");
+            sourceString = sourceString.Replace("&amp;", "&");
+            sourceString = sourceString.Replace("&quot;", "\"");
+            return sourceString;
+
         }
 
         //Функция позволяет избежать ошибок, если запрашиваемое поле пусто. Это для XML
@@ -377,6 +393,7 @@ namespace Загрузка_музыки_из_VK
             {
                 mediaPlayer.Source = new Uri((String)(currentAudioList[dataGridView1.SelectedIndex + i].source + ".mp3").Replace("https", "http"));
                 // текущий трек dataGridView1.SelectedIndex;
+                songNameLabel.Text = currentAudioList[dataGridView1.SelectedIndex + i].artist + " - " + currentAudioList[dataGridView1.SelectedIndex + i].title;
                 String mins = currentAudioList[dataGridView1.SelectedIndex].duration.Substring(0, currentAudioList[dataGridView1.SelectedIndex].duration.IndexOf(":"));
                 String secs = currentAudioList[dataGridView1.SelectedIndex].duration.Substring(currentAudioList[dataGridView1.SelectedIndex].duration.IndexOf(":")+1);
                 TimeSlider.Maximum = Convert.ToInt32(mins)*60 + Convert.ToInt32(secs);
@@ -427,5 +444,7 @@ namespace Загрузка_музыки_из_VK
             mediaPlayer.Position = TimeSpan.FromSeconds(TimeSlider.Value);
             mediaPlayer.Play();
         } 
+
+            
     }
 }
