@@ -29,8 +29,8 @@
 
         <DataGrid x:Name="dataGridView1" Grid.Row="0" Margin="10,71,9.502,41" Grid.ColumnSpan="4" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn  Header="Artist" Width="*" Binding="{Binding title}" />
-                <DataGridTextColumn Header="Name" Width="*" Binding="{Binding artist}" />
+                <DataGridTextColumn  Header="Artist" Width="*" Binding="{Binding artist}" />
+                <DataGridTextColumn Header="Name" Width="*" Binding="{Binding title}" />
                 <DataGridTextColumn Header="Duration" Width="100" Binding="{Binding duration}" />
                 <DataGridTemplateColumn Header="Play" Width="60" CellTemplate="{StaticResource ButtonTemplate}"/>
                 <DataGridCheckBoxColumn Header="Checked" x:Name="ValueCheck" Width="60" Binding="{Binding audioChecked}" />
@@ -81,9 +81,26 @@
         <Button BorderBrush="Transparent" Background="Transparent" Content="{StaticResource IconStop}" HorizontalAlignment="Left" Margin="104,0,0,40" Width="42"  Height="32" VerticalAlignment="Bottom" Grid.Row="1" Click="ButtonStop_Click"/>
         <Slider x:Name="TimeSlider" Margin="151,0,76.502,30" Grid.ColumnSpan="4" Height="35" VerticalAlignment="Bottom" Grid.Row="1" Maximum="1" AutoToolTipPlacement="TopLeft" PreviewMouseLeftButtonUp="TimeSlider_PreviewMouseLeftButtonUp" />
         <Label x:Name="TimeLabel" Content="00:00" Grid.Column="3" HorizontalAlignment="Right" Margin="0,0,0.502,0" Grid.Row="1" VerticalAlignment="Top" FontFamily="Consolas" FontSize="24"/>
+<<<<<<< HEAD
         <Slider x:Name="Volume_Slider" Grid.Column="3" HorizontalAlignment="Left" Margin="41.084,401,0,0" VerticalAlignment="Top" Width="78" ValueChanged="Slider_ValueChanged" SmallChange="1" Maximum="100" Value="100"/>
         <Label Content="Volume" Grid.Column="2" HorizontalAlignment="Left" Margin="33,396,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
         <Label x:Name="VolumeLabel" Content="100" Grid.Column="3" HorizontalAlignment="Left" Margin="129.084,396,0,0" VerticalAlignment="Top"/>
+=======
+        <TextBlock x:Name="songNameLabel" Margin="151,0,10.502,0" RenderTransformOrigin="9.237,-1.5" Grid.ColumnSpan="4" FontSize="14" FontFamily="Segoe WP Black" Height="36" VerticalAlignment="Bottom">
+            <TextBlock.Triggers>
+                <EventTrigger RoutedEvent="TextBlock.Loaded">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Canvas.Left)" From="1000" To="-750" 
+                                                     Duration="0:0:15" RepeatBehavior="Forever"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </TextBlock.Triggers>
+        </TextBlock>
+>>>>>>> origin/master
 
     </Grid>
 </Window>
