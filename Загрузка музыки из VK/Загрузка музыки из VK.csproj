@@ -114,23 +114,26 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\qtpVXLnwflo.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\vkontakte-logo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\znachek_pley.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\znachek_pley1.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Media-Play.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\play-active11.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Download.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Search-Find.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Login-01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
