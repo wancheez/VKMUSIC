@@ -83,28 +83,15 @@
 
         <Button BorderBrush="Transparent" Background="Transparent" Content="{StaticResource IconPause}" HorizontalAlignment="Left" Margin="57,0,0,40"  Width="42" Height="32" VerticalAlignment="Bottom" Click="ButtonPause_Click" Grid.Row="1"/>
         <Button BorderBrush="Transparent" Background="Transparent" Content="{StaticResource IconStop}" HorizontalAlignment="Left" Margin="104,0,0,40" Width="42"  Height="32" VerticalAlignment="Bottom" Grid.Row="1" Click="ButtonStop_Click"/>
-        <Slider x:Name="TimeSlider" Margin="151,0,112,30" Grid.ColumnSpan="4" Height="35" VerticalAlignment="Bottom" Grid.Row="1" Maximum="1" AutoToolTipPlacement="TopLeft" PreviewMouseLeftButtonUp="TimeSlider_PreviewMouseLeftButtonUp" >
+        <Slider Style="{StaticResource MyControlTempate}" x:Name="TimeSlider" Margin="151,0,112,30" Grid.ColumnSpan="4" Height="35" VerticalAlignment="Bottom" Grid.Row="1" Maximum="1" AutoToolTipPlacement="TopLeft" PreviewMouseLeftButtonUp="TimeSlider_PreviewMouseLeftButtonUp" >
             <Slider.Effect>
                 <DropShadowEffect/>
             </Slider.Effect>
         </Slider>    
             <Label x:Name="TimeLabel" Content="00:00" Grid.Column="3" HorizontalAlignment="Right" Margin="0,3,36,0" Grid.Row="1" VerticalAlignment="Top" FontFamily="Consolas" FontSize="24"/>
-        <Slider  x:Name="Volume_Slider" Grid.Column="3" Margin="0,0,11,40" ValueChanged="Slider_ValueChanged" SmallChange="1" Maximum="100" Value="100" Orientation="Vertical" Grid.RowSpan="2" Height="71" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="20"/>
+        <Slider   x:Name="Volume_Slider" Grid.Column="3" Margin="0,0,11,40" ValueChanged="Slider_ValueChanged" SmallChange="1" Maximum="100" Value="100" Orientation="Vertical" Grid.RowSpan="2" Height="71" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="20"/>
         <Label Content="Vol" Grid.Column="3" Margin="0,0,10,25" Grid.Row="1" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="27"/>
-        <TextBlock x:Name="songNameLabel" Margin="153,0,36,0" RenderTransformOrigin="9.237,-1.5" FontSize="14" FontFamily="Segoe WP Black" Height="36" VerticalAlignment="Bottom" Grid.ColumnSpan="4">
-            <TextBlock.Triggers>
-                <EventTrigger RoutedEvent="TextBlock.Loaded">
-                    <EventTrigger.Actions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation Storyboard.TargetProperty="(Canvas.Left)" From="1000" To="-750" 
-                                                     Duration="0:0:15" RepeatBehavior="Forever"/>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger.Actions>
-                </EventTrigger>
-            </TextBlock.Triggers>
-        </TextBlock>
+        <TextBlock x:Name="songNameLabel" Margin="153,0,36,0" RenderTransformOrigin="9.237,-1.5" FontSize="14" FontFamily="Segoe WP Black" Height="36" VerticalAlignment="Bottom" Grid.ColumnSpan="4"/>
 
     </Grid>
 </Window>
