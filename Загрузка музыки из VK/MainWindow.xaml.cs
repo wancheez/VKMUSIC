@@ -426,6 +426,12 @@ namespace Загрузка_музыки_из_VK
             mediaPlayer.Pause();
             mediaPlayer.Position = TimeSpan.FromSeconds(TimeSlider.Value);
             mediaPlayer.Play();
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            mediaPlayer.Volume = Volume_Slider.Value / 100;
+            //VolumeLabel.Content = mediaPlayer.Volume.ToString();
         } 
     }
 }
