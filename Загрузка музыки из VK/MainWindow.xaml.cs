@@ -393,13 +393,27 @@ namespace Загрузка_музыки_из_VK
             } else 
             if (dataGridView1.SelectedIndex != -1)
             {
+                dataGridView1.SelectedIndex = dataGridView1.SelectedIndex + i;
                 mediaPlayer.Source = new Uri((String)(currentAudioList[dataGridView1.SelectedIndex + i].source + ".mp3").Replace("https", "http"));
                 // текущий трек dataGridView1.SelectedIndex;
                 songNameLabel.Text = currentAudioList[dataGridView1.SelectedIndex + i].artist + " - " + currentAudioList[dataGridView1.SelectedIndex + i].title;
                 String mins = currentAudioList[dataGridView1.SelectedIndex].duration.Substring(0, currentAudioList[dataGridView1.SelectedIndex].duration.IndexOf(":"));
                 String secs = currentAudioList[dataGridView1.SelectedIndex].duration.Substring(currentAudioList[dataGridView1.SelectedIndex].duration.IndexOf(":")+1);
                 TimeSlider.Maximum = Convert.ToInt32(mins)*60 + Convert.ToInt32(secs);
-                mediaPlayer.Play();               
+                mediaPlayer.Play();
+            }
+                //Если ничего не выбрано и нажали плей, то играем первую в списке и наводим фокус на нее
+            else
+            {
+                dataGridView1.SelectedIndex = 0;
+                mediaPlayer.Source = new Uri((String)(currentAudioList[dataGridView1.SelectedIndex + i].source + ".mp3").Replace("https", "http"));
+                // текущий трек dataGridView1.SelectedIndex;
+                songNameLabel.Text = currentAudioList[dataGridView1.SelectedIndex + i].artist + " - " + currentAudioList[dataGridView1.SelectedIndex + i].title;
+                String mins = currentAudioList[dataGridView1.SelectedIndex].duration.Substring(0, currentAudioList[dataGridView1.SelectedIndex].duration.IndexOf(":"));
+                String secs = currentAudioList[dataGridView1.SelectedIndex].duration.Substring(currentAudioList[dataGridView1.SelectedIndex].duration.IndexOf(":") + 1);
+                TimeSlider.Maximum = Convert.ToInt32(mins) * 60 + Convert.ToInt32(secs);
+                mediaPlayer.Play();
+
             }
         }
 
