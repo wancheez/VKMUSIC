@@ -11,6 +11,140 @@
             <Path  x:Key="IconPause" x:Shared="False" Stretch="Uniform" Data="M12.346,0L19.988001,0 19.988001,21.333 12.346,21.333z M0,0L7.6430001,0 7.6430001,21.333 0,21.333z" Fill="Black" Stroke="Black"/>
             <Path  x:Key="IconStop" x:Shared="False" Stretch="Uniform"  Data="M0,0L19.465,0 19.465,21.333 0,21.333z" Fill="Black" Stroke="Black"/>
             <Path  x:Key="IconDownload" Data="M0,33.893959L4.4794149,33.893959 4.4794149,44.677959 48.903614,44.677959 48.903614,33.893959 53.333035,33.893959 53.333035,49.104958 0,49.104958z M24.842734,0L28.513577,0 28.513577,24.615005 35.345016,17.78297 40.346104,17.78297 40.436089,17.883007 26.673088,31.644001 24.072548,29.047991 12.910089,17.883007 13.010208,17.78297 18.001283,17.78297 24.842734,24.615005z" Stretch="Uniform" Fill="Black" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5"/>
+
+            <!--Чужой шаблон для слайдера-->
+            <ControlTemplate x:Key="SliderTempl"  TargetType="Slider">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TickBar  x:Name="TopTick"  Fill="LightGray" VerticalAlignment="Top"   SnapsToDevicePixels="True" Grid.Row="0" Placement="Top" Height="5" Visibility="Visible"/>
+                    <Border BorderBrush="LightGray"  BorderThickness="0,0,0,1" ></Border>
+                    <Border x:Name="TrackBackground" VerticalAlignment="Center" Margin="0,-10,0,0" BorderBrush="Red" Background="Red" Height="3"   Grid.Row="1"  BorderThickness="1"/>
+                    <Track Grid.Row="1" x:Name="PART_Track" Margin="0,-10,0,0"  >
+                        <Track.DecreaseRepeatButton>
+                            <RepeatButton Style="{StaticResource SliderRepeatButton1}"  Command="Slider.DecreaseLarge" />
+                        </Track.DecreaseRepeatButton>
+                        <Track.Thumb>
+                            <Thumb Style="{StaticResource SliderThumb}" Margin="0,-20,0,0" />
+                        </Track.Thumb>
+                        <Track.IncreaseRepeatButton>
+                            <RepeatButton Style="{StaticResource SliderRepeatButton}" Command="Slider.IncreaseLarge" />
+                        </Track.IncreaseRepeatButton>
+                    </Track>
+                    <TextBlock Text="0" Grid.Row="1" Margin="0,15,0,0"></TextBlock>
+                    <TickBar x:Name="BottomTick" Fill="LightGray"   SnapsToDevicePixels="True" Grid.Row="2"   Placement="Bottom" Height="4" Visibility="Collapsed" />
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="TickPlacement"  Value="TopLeft">
+                        <Setter TargetName="TopTick" Property="Visibility"  Value="Visible" />
+                    </Trigger>
+                    <Trigger Property="TickPlacement" Value="BottomRight">
+                        <Setter TargetName="BottomTick"  Property="Visibility"  Value="Visible" />
+                    </Trigger>
+                    <Trigger Property="TickPlacement" Value="Both">
+                        <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
+                        <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+
+            <Style x:Key="Horizontal_Slider" TargetType="Slider">
+                <Setter Property="Focusable" Value="False"/>
+                <Setter Property="SnapsToDevicePixels" Value="true" />
+                <Setter Property="OverridesDefaultStyle" Value="true" />
+                <Style.Triggers>
+                    <Trigger Property="Orientation" Value="Horizontal">
+                        <Setter Property="MinHeight" Value="21" />
+                        <Setter Property="MinWidth" Value="104" />
+                        <Setter Property="Template" Value="{StaticResource SliderTempl}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="SliderRepeatButton" TargetType="RepeatButton">
+                <Setter Property="SnapsToDevicePixels" Value="true" />
+                <Setter Property="OverridesDefaultStyle" Value="true" />
+                <Setter Property="IsTabStop" Value="false" />
+                <Setter Property="Focusable" Value="false" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="RepeatButton">
+                            <Border Background="Transparent"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="SliderRepeatButton1" TargetType="RepeatButton">
+                <Setter Property="SnapsToDevicePixels" Value="true" />
+                <Setter Property="OverridesDefaultStyle" Value="true" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="RepeatButton">
+                            <Border SnapsToDevicePixels="True" Background="YellowGreen"  BorderThickness="1" BorderBrush="YellowGreen" Height="3"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="SliderThumb" TargetType="Thumb">
+                <Setter Property="SnapsToDevicePixels" Value="true" />
+                <Setter Property="OverridesDefaultStyle" Value="true" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Thumb">
+                            <StackPanel Orientation="Vertical">
+                                <Path Data="M 0 0 L 8 0 L 4 6 Z"  Stroke="YellowGreen" Margin="-2,0,0,0" StrokeThickness="2" Fill="YellowGreen"></Path>
+                                <Line X1="0" Y1="0" X2="0" Y2="7" Stroke="Gray" StrokeThickness="1" Margin="2,0,0,0" StrokeDashArray="1.5,1.5"></Line>
+                                <TextBlock Foreground="Black" Margin="-2,30,0,0"  Text="{Binding Value, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Slider}}}"/>
+                            </StackPanel>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!--Чужой шаблон для кнопки-->
+            <ControlTemplate x:Key="11" TargetType="Button">
+                <Border Name="RootElement">
+
+                    <!--Create the SolidColorBrush for the Background 
+        as an object elemment and give it a name so 
+        it can be referred to elsewhere in the
+        control template.-->
+                    <Border.Background>
+                        <SolidColorBrush x:Name="BorderBrush" Color="Black"/>
+                    </Border.Background>
+
+                    <!--Create a border that has a different color
+        by adding smaller grid. The background of 
+        this grid is specificied by the button's 
+        Background property.-->
+                    <Grid Margin="4" Background="{TemplateBinding Background}">
+
+                        <!--Use a ContentPresenter to display the Content of
+          the Button.-->
+                        <ContentPresenter
+        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+        Margin="4,5,4,4" />
+                    </Grid>
+
+                </Border>
+            </ControlTemplate>
+
+
+            <!--Собственный шаблон для слайдера. Находится в разработке-->
+            <ControlTemplate x:Key="MyControlTempate" TargetType="{x:Type Slider}">
+
+            </ControlTemplate>
+
+            <!--Собственный шаблон для кнопки. Находится в разработке. Делать в стиле ВКонтакте. Пример на vk.com/dev-->
+            <ControlTemplate x:Key="MyButtonTemplate" TargetType="{x:Type Button}">
+
+            </ControlTemplate>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>
