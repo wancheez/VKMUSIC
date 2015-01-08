@@ -100,7 +100,8 @@ namespace Загрузка_музыки_из_VK
                     if (!(userName == "нет данных нет данных"))
                     {
                         vkApiClass = new VKAPI(appId, accessToken);
-                        button_auth.Background = Brushes.LightGreen;
+                        var bc = new BrushConverter();
+                        button_auth.Background = (Brush) bc.ConvertFrom("#FF36638E");
                         button_auth.Content = "Authorised";
 
                         profileXml = vkApiClass.getProfile(userId);
@@ -157,7 +158,8 @@ namespace Загрузка_музыки_из_VK
             if (isAuthorised)
             {
                 vkApiClass = new VKAPI(appId, accessToken);
-                button_auth.Background = Brushes.LightGreen;
+                var bc = new BrushConverter();
+                button_auth.Background = (Brush)bc.ConvertFrom("#FF36638E");
                 button_auth.Content = "Logout";
                 
                 profileXml = vkApiClass.getProfile(userId);

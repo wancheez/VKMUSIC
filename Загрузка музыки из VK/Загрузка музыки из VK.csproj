@@ -96,7 +96,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -110,6 +110,26 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\play-active.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\qtpVXLnwflo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vkontakte-logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\znachek_pley.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\znachek_pley1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Media-Play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\play-active11.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
