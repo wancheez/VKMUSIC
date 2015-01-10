@@ -36,7 +36,7 @@
                 <DataGridTextColumn  Header="Artist" Width="*" Binding="{Binding artist}" />
                 <DataGridTextColumn Header="Name" Width="*" Binding="{Binding title}" />
                 <DataGridTextColumn Header="Duration" Width="100" Binding="{Binding duration}" />
-               <DataGridTemplateColumn Header="Play" Width="60" CellTemplate="{StaticResource ButtonTemplate}" />
+                <DataGridTemplateColumn Header="Play" Width="60" CellTemplate="{StaticResource ButtonTemplate}" />
                 <DataGridTemplateColumn Header="Checked" IsReadOnly="False">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -44,7 +44,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-               
+
             </DataGrid.Columns>
         </DataGrid>
         <MediaElement x:Name="mediaPlayer" 
@@ -54,14 +54,13 @@
 			Visibility="Hidden" 
             MediaEnded="mediaPlayer_MediaEnded"      
             MediaOpened="mediaPlayer_MediaOpened"/>
-        <Button Grid.Column="3" x:Name="button_auth"  Margin="0,11,9.502,0" VerticalAlignment="Top" RenderTransformOrigin="-3.735,0.36" Click="button_auth_Click" Height="27" Background="Tomato" HorizontalAlignment="Right" Width="126" FontSize="16" Foreground="White">
-        <StackPanel Orientation="Horizontal">
-                <Image Source="Resources/Login-01.png" Width="40" Height="20" />
-            <TextBlock Text="  Login" Width="91" FontFamily="Segoe WP Black" Foreground="White" FontSize="16"/>
-        </StackPanel>
+        <Button Grid.Column="3" x:Name="button_auth"  Margin="0,16,11,0" VerticalAlignment="Top" RenderTransformOrigin="-3.735,0.36" Click="button_auth_Click"  Background="Tomato" HorizontalAlignment="Right" Height="23" Width="100" FontSize="16" Foreground="White">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="Resources/Login-01.png" Width="34" Height="14" />
+                <TextBlock Text="  Login" Width="56" Foreground="White" FontSize="12"/>
+            </StackPanel>
         </Button>
-        <Label Grid.Column="0" Grid.Row="0" x:Name="label_welcome" Content="User:" Margin="10,4,140.502,0" VerticalAlignment="Top" FontSize="18" Grid.ColumnSpan="4"/>
-        <TextBox x:Name="textBox_searchGlobalAudio" Margin="97,43,10.502,0" TextWrapping="Wrap" ToolTip="Typе here artist's or music's name" Grid.ColumnSpan="4" Height="23" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBox_searchGlobalAudio" Margin="97,43,11,0" TextWrapping="Wrap" ToolTip="Typе here artist's or music's name" Grid.ColumnSpan="4" Height="23"  VerticalAlignment="Top"/>
         <Button x:Name="button_find"  VerticalAlignment="Top" Margin="10,43,0,0" Height="23" Click="button_find_Click" HorizontalAlignment="Left" Width="87" BorderBrush="{x:Null}" Foreground="White">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -80,7 +79,7 @@
                         </TransformGroup>
                     </Image.RenderTransform>
                 </Image>
-                <TextBlock Text="Find" Width="41" FontFamily="Segoe WP Black" Foreground="White" FontSize="15" Height="21"/>
+                <TextBlock Text="Find" Width="41" Foreground="White" FontSize="15" Height="21"/>
             </StackPanel>
         </Button>
         <Button x:Name="button_downloadAudio" Margin="10,0,0,6" Height="30" VerticalAlignment="Bottom" Click="button_downloadAudio_Click" FontSize="14" HorizontalAlignment="Left" Width="136">
@@ -92,7 +91,7 @@
             </Button.Background>
             <StackPanel Orientation="Horizontal">
                 <Image Source="Resources/Download.png" Height="25" />
-                <TextBlock Text="  Download" Width="91" FontFamily="Segoe WP Black" Foreground="White" FontSize="16"/>
+                <TextBlock Text="  Download" Width="91" Foreground="White" FontSize="18"/>
             </StackPanel>
         </Button>
         <ProgressBar x:Name="progressBar_download" Grid.Row="1" Margin="90,0,87.502,5" RenderTransformOrigin="0.58,1" Grid.ColumnSpan="4" Height="20" VerticalAlignment="Bottom"/>
@@ -126,6 +125,42 @@
         <Slider   x:Name="Volume_Slider" Grid.Column="3" Margin="0,0,11,40" ValueChanged="Slider_ValueChanged" SmallChange="1" Maximum="100" Value="100" Orientation="Vertical" Grid.RowSpan="2" Height="71" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="20"/>
         <Label Content="Vol" Grid.Column="3" Margin="0,0,10,25" Grid.Row="1" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="27"/>
         <TextBlock x:Name="songNameLabel" Margin="153,0,36,0" RenderTransformOrigin="9.237,-1.5" FontSize="18" FontFamily="Segoe WP Black" Height="36" VerticalAlignment="Bottom" Grid.ColumnSpan="4"/>
+        <Button x:Name="Button_MyAudio" Grid.Column="1" HorizontalAlignment="Left" Margin="22,16,0,0" VerticalAlignment="Top"  Height="23" Width="100" FontSize="16" Grid.ColumnSpan="2" Click="Button_MyAudio_Click" >
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF5C7EA3" Offset="0"/>
+                    <GradientStop Color="#FF455D83" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+            <StackPanel Orientation="Horizontal">
+                <Image Source="Resources/House.png" Width="24" Height="18" />
+                <TextBlock Text="My audio" Width="56" Foreground="White" FontSize="14"/>
+            </StackPanel>
+        </Button>
+        <Button x:Name="Button_Popular" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="115,16,0,0" VerticalAlignment="Top"  Height="23" Width="100" FontSize="16" Click="Button_Popular_Click" >
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF5C7EA3" Offset="0"/>
+                    <GradientStop Color="#FF455D83" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+            <StackPanel Orientation="Horizontal">
+                <Image Source="Resources/star.png" Width="22" Height="18" />
+                <TextBlock Text="Popular" Width="56" Foreground="White" FontSize="14"/>
+            </StackPanel>
+        </Button>
+        <Button x:Name="Button_Reccomend" Margin="10,16,0,0" VerticalAlignment="Top"  Height="23" FontSize="16" HorizontalAlignment="Left" Width="100" Click="Button_Reccomend_Click">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF5C7EA3" Offset="0"/>
+                    <GradientStop Color="#FF455D83" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+            <StackPanel Orientation="Horizontal">
+                <Image Source="Resources/ThumbsUp.png" Width="21" Height="16" />
+                <TextBlock  Text="Reccomend" Width="75"  Foreground="White" FontSize="14"/>
+            </StackPanel>
+        </Button>
 
     </Grid>
 </Window>

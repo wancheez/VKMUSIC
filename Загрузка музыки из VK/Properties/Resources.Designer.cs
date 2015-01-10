@@ -73,6 +73,16 @@ namespace Загрузка_музыки_из_VK.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap House {
+            get {
+                object obj = ResourceManager.GetObject("House", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Login_01 {
             get {
                 object obj = ResourceManager.GetObject("Login_01", resourceCulture);
@@ -116,6 +126,26 @@ namespace Загрузка_музыки_из_VK.Properties {
         public static System.Drawing.Bitmap Search_Find {
             get {
                 object obj = ResourceManager.GetObject("Search_Find", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap star {
+            get {
+                object obj = ResourceManager.GetObject("star", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ThumbsUp {
+            get {
+                object obj = ResourceManager.GetObject("ThumbsUp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

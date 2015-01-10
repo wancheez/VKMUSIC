@@ -105,8 +105,7 @@ namespace Загрузка_музыки_из_VK
                         button_auth.Content = "Authorised";
 
                         profileXml = vkApiClass.getProfile(userId);
-                        label_welcome.Content = "User: " + GetDataFromXmlNode(profileXml.SelectSingleNode("response/user/first_name")) +
-                            " " + GetDataFromXmlNode(profileXml.SelectSingleNode("response/user/last_name"));
+                        
                         getAudioFunc();
                         try
                         {
@@ -160,20 +159,16 @@ namespace Загрузка_музыки_из_VK
                 vkApiClass = new VKAPI(appId, accessToken);
                 var bc = new BrushConverter();
                 button_auth.Background = (Brush)bc.ConvertFrom("#FF36638E");
-                button_auth.Content = "Logout";
-                
-                profileXml = vkApiClass.getProfile(userId);
-                label_welcome.Content = "User: " + GetDataFromXmlNode(profileXml.SelectSingleNode("response/user/first_name")) +
-                    " " + GetDataFromXmlNode(profileXml.SelectSingleNode("response/user/last_name"));
+                button_auth.Content = "Logout";                
+                profileXml = vkApiClass.getProfile(userId);                
                 getAudioFunc(N);
             }
             else
             {
-                label_welcome.Content = "User: ";
                 if(currentAudioList!=null)
                 currentAudioList.Clear();
                 button_auth.Background = Brushes.Tomato;
-                button_auth.Content = "Login";
+                button_auth.Content = "Login";                
             }
         }
 
@@ -465,6 +460,24 @@ namespace Загрузка_музыки_из_VK
         {
             mediaPlayer.Volume = Volume_Slider.Value / 100;
             //VolumeLabel.Content = mediaPlayer.Volume.ToString();
+        }
+
+        private void Button_Reccomend_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Popular_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_MyAudio_Click(object sender, RoutedEventArgs e)
+        {
+            currentOffset = 0;
+            searchUserAudio = true;
+            textBox_searchGlobalAudio.Text = "";
+            getAudioFunc();
         } 
 
             
