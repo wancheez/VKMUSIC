@@ -124,9 +124,6 @@
   <data name="Login_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Login-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Media_Play" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Media-Play.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="play_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\play-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -144,5 +141,23 @@
   </data>
   <data name="ThumbsUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ThumbsUp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Arrow_next" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Arrow next.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Arrow_pred" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Arrow pred.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Media_Next1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Media Next1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Media_Next2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Media Next2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Media_Play1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Media-Play1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="myicon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\myicon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

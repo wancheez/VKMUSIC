@@ -55,7 +55,7 @@ namespace Загрузка_музыки_из_VK
         XmlDocument profileXml;
         int currentOffset = 0;
         const int N = 20;
-        List<audioItems> currentAudioList; //Список записей, которые сейчас отображены
+        List<audioItems> currentAudioList = new List<audioItems>(); //Список записей, которые сейчас отображены
         List<audioItems> audioToDownload = new List<audioItems>();//Список аудиозаписей, которые нужно скачать
         WebClient client;
         bool isPaused = false; //Стоит ли музыка на паузе
@@ -67,7 +67,7 @@ namespace Загрузка_музыки_из_VK
         {
             InitializeComponent();
             client = new WebClient();
-           
+            dataGridView1.ItemsSource = currentAudioList;
             //Инициализация таймера
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += timer_Tick;
@@ -100,10 +100,31 @@ namespace Загрузка_музыки_из_VK
                     if (!(userName == "нет данных нет данных"))
                     {
                         vkApiClass = new VKAPI(appId, accessToken);
-                        var bc = new BrushConverter();
-                        button_auth.Background = (Brush) bc.ConvertFrom("#FF36638E");
-                        button_auth.Content = "Authorised";
 
+                        //Разукрашиваем кнопку авторизации
+                        var bc = new BrushConverter();
+                        LinearGradientBrush myLinearGradientBrush =
+                        new LinearGradientBrush();
+                        myLinearGradientBrush.StartPoint = new Point(0.5,0);
+                        myLinearGradientBrush.EndPoint = new Point(0.5,1);
+                        myLinearGradientBrush.GradientStops.Add(
+                            new GradientStop((Color)ColorConverter.ConvertFromString("#FF5C7EA3"), 0.0));
+                        myLinearGradientBrush.GradientStops.Add(
+                            new GradientStop((Color)ColorConverter.ConvertFromString("#FF455D83"), 1));
+                        button_auth.Background = myLinearGradientBrush;
+                        StackPanel myStackPanel = new StackPanel();
+                        myStackPanel.Orientation = Orientation.Horizontal;
+                        Image img = new Image();
+                        img.Source = new BitmapImage(new Uri("Resources/Login-01.png", UriKind.Relative));
+                        
+                        myStackPanel.Children.Add(img);
+                        TextBlock txt = new TextBlock();
+                        txt.Text = "Authorised";
+                        txt.Foreground = Brushes.White;
+                        txt.Background = Brushes.Transparent;
+                        txt.FontSize = 14;
+                        myStackPanel.Children.Add(txt);
+                        button_auth.Content = myStackPanel;
                         profileXml = vkApiClass.getProfile(userId);
                         
                         getAudioFunc();
@@ -168,7 +189,7 @@ namespace Загрузка_музыки_из_VK
                 if(currentAudioList!=null)
                 currentAudioList.Clear();
                 button_auth.Background = Brushes.Tomato;
-                button_auth.Content = "Login";                
+               // button_auth.Content = "Login";                
             }
         }
 
@@ -181,7 +202,8 @@ namespace Загрузка_музыки_из_VK
         {
             XmlNodeList nodeList;
             //item.Clear();
-            currentAudioList = new List<audioItems>();
+            List<audioItems> currentAudioList1 = new List<audioItems>(); //Временная переменная, чтобы обновлять содержимое таблицы
+            //currentAudioList1 = currentAudioList;
             if (isAuthorised)
             {
                 XmlDocument audioXml;
@@ -200,8 +222,11 @@ namespace Загрузка_музыки_из_VK
                     
                     currentAudioList.Add(audioIte);
                 }
+                double curTableHeight = dataGridView1.ActualHeight;//Сохраняем текущую высоту таблицы, чтоб после обновления она не растягивалась
+                dataGridView1.ItemsSource = null;                
                 dataGridView1.ItemsSource = currentAudioList;
-
+                if(curTableHeight!=0.0)
+                dataGridView1.Height = curTableHeight;              
             }
             else MessageBox.Show("Сначала нужно авторизоваться", "Ошибка", MessageBoxButton.OK,MessageBoxImage.Exclamation);
         }
@@ -247,12 +272,13 @@ namespace Загрузка_музыки_из_VK
         /// </summary>
         /// <param name="count"></param>
         /// <param name="offset"></param>
+        /// <param name="count">Имя искомой записи</param>
         private void getGlobalAudioFunc(int count = 20, int offset = 0, string query="")
         {
             searchUserAudio = false;
             XmlNodeList nodeList;
             //item.Clear();
-            currentAudioList = new List<audioItems>();
+            //currentAudioList = new List<audioItems>();
             if (isAuthorised)
             {
                 XmlDocument audioXml;
@@ -270,7 +296,8 @@ namespace Загрузка_музыки_из_VK
                     ite.source = GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("url"));
                     currentAudioList.Add(ite);
                 }
-                dataGridView1.ItemsSource = currentAudioList;
+                dataGridView1.ItemsSource = null;
+                dataGridView1.ItemsSource = currentAudioList;//Обновление таблицы
 
             }
             else MessageBox.Show("Сначала нужно авторизоваться", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Exclamation);
@@ -372,7 +399,8 @@ namespace Загрузка_музыки_из_VK
 
         private void ButtonPlay_Click(object sender, RoutedEventArgs e)
         {
-            playSelectedAudio();
+            num = dataGridView1.SelectedIndex;
+            playSelectedAudio(num);
         }
 
         /// <summary>
@@ -386,12 +414,12 @@ namespace Загрузка_музыки_из_VK
                 mediaPlayer.Play();
                 isPaused = false;
             } else 
-            if (dataGridView1.SelectedIndex != -1)
+            if (dataGridView1.SelectedIndex != -1 || i!=0)
             {
-                dataGridView1.SelectedIndex = dataGridView1.SelectedIndex + i;
-                mediaPlayer.Source = new Uri((String)(currentAudioList[dataGridView1.SelectedIndex + i].source + ".mp3").Replace("https", "http"));
+                dataGridView1.SelectedIndex = i;
+                mediaPlayer.Source = new Uri((String)(currentAudioList[i].source + ".mp3").Replace("https", "http"));
                 // текущий трек dataGridView1.SelectedIndex;
-                songNameLabel.Text = currentAudioList[dataGridView1.SelectedIndex + i].artist + " - " + currentAudioList[dataGridView1.SelectedIndex + i].title;
+                songNameLabel.Text = currentAudioList[dataGridView1.SelectedIndex ].artist + " - " + currentAudioList[dataGridView1.SelectedIndex].title;
                 String mins = currentAudioList[dataGridView1.SelectedIndex].duration.Substring(0, currentAudioList[dataGridView1.SelectedIndex].duration.IndexOf(":"));
                 String secs = currentAudioList[dataGridView1.SelectedIndex].duration.Substring(currentAudioList[dataGridView1.SelectedIndex].duration.IndexOf(":")+1);
                 TimeSlider.Maximum = Convert.ToInt32(mins)*60 + Convert.ToInt32(secs);
@@ -401,9 +429,9 @@ namespace Загрузка_музыки_из_VK
             else
             {
                 dataGridView1.SelectedIndex = 0;
-                mediaPlayer.Source = new Uri((String)(currentAudioList[dataGridView1.SelectedIndex + i].source + ".mp3").Replace("https", "http"));
+                mediaPlayer.Source = new Uri((String)(currentAudioList[dataGridView1.SelectedIndex].source + ".mp3").Replace("https", "http"));
                 // текущий трек dataGridView1.SelectedIndex;
-                songNameLabel.Text = currentAudioList[dataGridView1.SelectedIndex + i].artist + " - " + currentAudioList[dataGridView1.SelectedIndex + i].title;
+                songNameLabel.Text = currentAudioList[dataGridView1.SelectedIndex].artist + " - " + currentAudioList[dataGridView1.SelectedIndex].title;
                 String mins = currentAudioList[dataGridView1.SelectedIndex].duration.Substring(0, currentAudioList[dataGridView1.SelectedIndex].duration.IndexOf(":"));
                 String secs = currentAudioList[dataGridView1.SelectedIndex].duration.Substring(currentAudioList[dataGridView1.SelectedIndex].duration.IndexOf(":") + 1);
                 TimeSlider.Maximum = Convert.ToInt32(mins) * 60 + Convert.ToInt32(secs);
@@ -427,7 +455,22 @@ namespace Загрузка_музыки_из_VK
         private void mediaPlayer_MediaEnded(object sender, RoutedEventArgs e)
         {
             num++;
-            playSelectedAudio(num);
+            if (num < dataGridView1.Items.Count)
+                playSelectedAudio(num);
+            else
+            {
+                currentOffset += N;
+                if (searchUserAudio)
+                {
+                    getAudioFunc(N, currentOffset);
+                }
+                else
+                {
+                    getGlobalAudioFunc(N, currentOffset, textBox_searchGlobalAudio.Text);
+                }
+                playSelectedAudio(num);
+            }
+
         }
 
         private void mediaPlayer_MediaOpened(object sender, RoutedEventArgs e)
@@ -478,8 +521,22 @@ namespace Загрузка_музыки_из_VK
             searchUserAudio = true;
             textBox_searchGlobalAudio.Text = "";
             getAudioFunc();
-        } 
+        }
 
+        private void Button_NextTrack_Click(object sender, RoutedEventArgs e)
+        {
+            num++;
+            playSelectedAudio(num);
+        }
+
+        private void Button_PreviousTrack_Click(object sender, RoutedEventArgs e)
+        {
+            if (num >= 1)
+            {
+                num--;
+            }
+            playSelectedAudio(num);
+        }
             
     }
 }
