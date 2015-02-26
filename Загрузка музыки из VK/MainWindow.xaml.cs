@@ -43,6 +43,7 @@ namespace Загрузка_музыки_из_VK
             pc.XmlnsDictionary.Add("", "http://schemas.microsoft.com/winfx/2006/xaml/presentation");
             pc.XmlnsDictionary.Add("x", "http://schemas.microsoft.com/winfx/2006/xaml");
             buttonPlay = (DataTemplate)XamlReader.Load(sr, pc);
+            
         }
         }
         static private int appId = 4201412;
@@ -58,10 +59,11 @@ namespace Загрузка_музыки_из_VK
         List<audioItems> currentAudioList = new List<audioItems>(); //Список записей, которые сейчас отображены
         List<audioItems> audioToDownload = new List<audioItems>();//Список аудиозаписей, которые нужно скачать
         WebClient client;
-        bool isPaused = false; //Стоит ли музыка на паузе
+        bool isPaused = true; //Стоит ли музыка на паузе
         int num = 0; //Переменная используется, чтобы при окончании трека запускался следующий. В переменной хранится смещение от первой композиции
         DispatcherTimer timer = new DispatcherTimer(); //Таймер для работы слайдера и вывода времени проигрывания. Пока проще выхода не придумал
         TimeSpan TotalTime;
+        byte currentCatalog = 0; //Мои записи - 0/Популярное - 1/Рекомендации - 2/Поиск - 3
 
         public MainWindow()
         {
@@ -112,6 +114,7 @@ namespace Загрузка_музыки_из_VK
                         myLinearGradientBrush.GradientStops.Add(
                             new GradientStop((Color)ColorConverter.ConvertFromString("#FF455D83"), 1));
                         button_auth.Background = myLinearGradientBrush;
+                        
                         StackPanel myStackPanel = new StackPanel();
                         myStackPanel.Orientation = Orientation.Horizontal;
                         Image img = new Image();
@@ -261,9 +264,14 @@ namespace Загрузка_музыки_из_VK
 
         private void button_find_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox_searchGlobalAudio.Text != "")
+            if (currentCatalog != 3)
             {
-                getGlobalAudioFunc(N, 0, textBox_searchGlobalAudio.Text);
+                currentCatalog = 3;
+                currentAudioList.Clear();
+                if (textBox_searchGlobalAudio.Text != "")
+                {
+                    getGlobalAudioFunc(N, 0, textBox_searchGlobalAudio.Text);
+                }
             }
         }
 
@@ -362,6 +370,7 @@ namespace Загрузка_музыки_из_VK
             }
             if (audioToDownload.Count != 0&&!downloading)
             {
+                progressBar_download.Visibility = System.Windows.Visibility.Visible;
                 downloading = true;
                 label_downloadingFileName.Content = audioToDownload[0].artist + " - " + audioToDownload[0].title;
                 client.DownloadFileAsync(new Uri(audioToDownload[0].source), downloadAdress + "\\" + audioToDownload[0].artist + " - " + audioToDownload[0].title + ".mp3");
@@ -389,6 +398,8 @@ namespace Загрузка_музыки_из_VK
             else
             {
                 progressBar_download.Value = 0;
+                progressBar_download.Visibility = System.Windows.Visibility.Hidden;
+                label_downloadingFileName.Content = "";
                 downloading = false;
             }
         }
@@ -398,9 +409,49 @@ namespace Загрузка_музыки_из_VK
         }
 
         private void ButtonPlay_Click(object sender, RoutedEventArgs e)
+            //Если запись на паузе, начинаем ее проигрывать, если играет, ставим на паузу. Если не на паузе и ничего не выбрано, то играем первую
         {
-            num = dataGridView1.SelectedIndex;
-            playSelectedAudio(num);
+            if (isPaused)
+            {
+                
+                StackPanel myStackPanel = new StackPanel();
+                myStackPanel.Orientation = Orientation.Horizontal;
+                Image img = new Image();
+                img.Source = new BitmapImage(new Uri("Resources/Media Pause.png", UriKind.Relative));
+
+                img.Height = 22;
+                img.Width = 37;
+                myStackPanel.Children.Add(img);
+
+                button_playPause.Content = myStackPanel;
+
+                num = dataGridView1.SelectedIndex;
+                if (num == -1)
+                {
+                    num = 0;
+                    playSelectedAudio(num);
+                }
+                else
+                    mediaPlayer.Play();
+                isPaused = false;
+                
+                
+            }
+            else
+            {
+                mediaPlayer.Pause();
+                isPaused = true;
+                StackPanel myStackPanel = new StackPanel();
+                myStackPanel.Orientation = Orientation.Horizontal;
+                Image img = new Image();
+                img.Source = new BitmapImage(new Uri("Resources/Media-Play1.png", UriKind.Relative));
+                img.Height = 22;
+                img.Width = 37;
+                myStackPanel.Children.Add(img);
+
+                button_playPause.Content = myStackPanel;
+            }
+
         }
 
         /// <summary>
@@ -409,11 +460,7 @@ namespace Загрузка_музыки_из_VK
         /// <param name="i">Показывает, на сколько смещена запись от первой</param>
         private void playSelectedAudio(int i=0)
         {
-            if (isPaused)
-            {
-                mediaPlayer.Play();
-                isPaused = false;
-            } else 
+
             if (dataGridView1.SelectedIndex != -1 || i!=0)
             {
                 dataGridView1.SelectedIndex = i;
@@ -436,22 +483,9 @@ namespace Загрузка_музыки_из_VK
                 String secs = currentAudioList[dataGridView1.SelectedIndex].duration.Substring(currentAudioList[dataGridView1.SelectedIndex].duration.IndexOf(":") + 1);
                 TimeSlider.Maximum = Convert.ToInt32(mins) * 60 + Convert.ToInt32(secs);
                 mediaPlayer.Play();
-
             }
         }
-
-        private void ButtonPause_Click(object sender, RoutedEventArgs e)
-        {
-            mediaPlayer.Pause();
-            isPaused = true;
-        }
-
-        private void ButtonStop_Click(object sender, RoutedEventArgs e)
-        {
-            mediaPlayer.Stop();
-        }
-
-        
+       
         private void mediaPlayer_MediaEnded(object sender, RoutedEventArgs e)
         {
             num++;
@@ -492,8 +526,27 @@ namespace Загрузка_музыки_из_VK
                     TimeLabel.Content = TimeSpan.FromSeconds(mediaPlayer.Position.TotalSeconds).ToString("mm':'ss");
         }
 
+        /// <summary>
+        /// Перетащили слайдер
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TimeSlider_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            if (isPaused)
+            {
+                StackPanel myStackPanel = new StackPanel();
+                myStackPanel.Orientation = Orientation.Horizontal;
+                Image img = new Image();
+                img.Source = new BitmapImage(new Uri("Resources/Media Pause.png", UriKind.Relative));
+
+                img.Height = 22;
+                img.Width = 37;
+                myStackPanel.Children.Add(img);
+
+                button_playPause.Content = myStackPanel;
+                isPaused = false;
+            }
             mediaPlayer.Pause();
             mediaPlayer.Position = TimeSpan.FromSeconds(TimeSlider.Value);
             mediaPlayer.Play();
@@ -517,26 +570,134 @@ namespace Загрузка_музыки_из_VK
 
         private void Button_MyAudio_Click(object sender, RoutedEventArgs e)
         {
-            currentOffset = 0;
-            searchUserAudio = true;
-            textBox_searchGlobalAudio.Text = "";
-            getAudioFunc();
+            if (currentCatalog != 0)
+            {
+                currentCatalog = 0;
+                currentAudioList.Clear();
+                currentOffset = 0;
+                searchUserAudio = true;
+                textBox_searchGlobalAudio.Text = "";
+                getAudioFunc();
+            }
         }
 
         private void Button_NextTrack_Click(object sender, RoutedEventArgs e)
         {
-            num++;
-            playSelectedAudio(num);
+            if (isPaused)
+            {
+
+                StackPanel myStackPanel = new StackPanel();
+                myStackPanel.Orientation = Orientation.Horizontal;
+                Image img = new Image();
+                img.Source = new BitmapImage(new Uri("Resources/Media Pause.png", UriKind.Relative));
+
+                img.Height = 22;
+                img.Width = 37;
+                myStackPanel.Children.Add(img);
+
+                button_playPause.Content = myStackPanel;
+                
+                num++;
+                playSelectedAudio(num);
+                isPaused = false;
+
+
+            }
+            else
+            {
+                num++;
+
+                playSelectedAudio(num);
+            }
+           
         }
 
         private void Button_PreviousTrack_Click(object sender, RoutedEventArgs e)
         {
-            if (num >= 1)
+            if (isPaused)
             {
-                num--;
+
+                StackPanel myStackPanel = new StackPanel();
+                myStackPanel.Orientation = Orientation.Horizontal;
+                Image img = new Image();
+                img.Source = new BitmapImage(new Uri("Resources/Media Pause.png", UriKind.Relative));
+
+                img.Height = 22;
+                img.Width = 37;
+                myStackPanel.Children.Add(img);
+
+                button_playPause.Content = myStackPanel;
+
+                if (num >= 1)
+                {
+                    num--;
+                }
+                playSelectedAudio(num);
+                isPaused = false;
+
+
             }
-            playSelectedAudio(num);
+            else
+            {
+                if (num >= 1)
+                {
+                    num--;
+                }
+
+                playSelectedAudio(num);
+            }
+           
         }
-            
+
+        private void ButtonTablePlay_Click(object sender, RoutedEventArgs e)
+        {
+            if (isPaused)
+            {
+
+                StackPanel myStackPanel = new StackPanel();
+                myStackPanel.Orientation = Orientation.Horizontal;
+                Image img = new Image();
+                img.Source = new BitmapImage(new Uri("Resources/Media Pause.png", UriKind.Relative));
+
+                img.Height = 22;
+                img.Width = 37;
+                myStackPanel.Children.Add(img);
+
+                button_playPause.Content = myStackPanel;
+
+                num = dataGridView1.SelectedIndex;
+               
+                    playSelectedAudio(num);
+                isPaused = false;
+
+
+            }
+            else
+            {
+                num = dataGridView1.SelectedIndex;
+
+                playSelectedAudio(num);
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            vkApiClass.wallPost(userId, userId, "Тест VK api wall post");
+            XmlDocument test = vkApiClass.getWallUploadServer("");
+            XmlNodeList xmlnode = test.SelectNodes("response/upload_url");
+            string UploadServer = GetDataFromXmlNode(xmlnode.Item(0));
+            WebRequest request = WebRequest.Create(UploadServer);
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            Stream dataStream = request.GetRequestStream();
+            byte[] myFile = File.ReadAllBytes(@"C:\Users\Иван\Pictures\Служебные\testf.png");
+            dataStream.Write(myFile,0,myFile.Length);
+            dataStream.Close();
+            WebResponse response = request.GetResponse();
+            Stream data = response.GetResponseStream();
+            int x;
+        }
+
+  
     }
 }

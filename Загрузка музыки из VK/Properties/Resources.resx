@@ -160,4 +160,13 @@
   <data name="myicon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\myicon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Media_Pause" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Media Pause.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Volume_Speaker" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Volume-Speaker.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Volume11" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Volume11.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

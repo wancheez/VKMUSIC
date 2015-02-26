@@ -133,6 +133,16 @@ namespace Загрузка_музыки_из_VK.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap Media_Pause {
+            get {
+                object obj = ResourceManager.GetObject("Media_Pause", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Media_Play1 {
             get {
                 object obj = ResourceManager.GetObject("Media_Play1", resourceCulture);
@@ -196,6 +206,26 @@ namespace Загрузка_музыки_из_VK.Properties {
         public static System.Drawing.Bitmap ThumbsUp {
             get {
                 object obj = ResourceManager.GetObject("ThumbsUp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Volume_Speaker {
+            get {
+                object obj = ResourceManager.GetObject("Volume_Speaker", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Volume11 {
+            get {
+                object obj = ResourceManager.GetObject("Volume11", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

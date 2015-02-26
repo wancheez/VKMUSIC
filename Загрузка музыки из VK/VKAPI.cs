@@ -14,7 +14,11 @@ namespace Загрузка_музыки_из_VK
         string accessToken;
         
       
-
+        /// <summary>
+        /// Экземпляр класса VK API
+        /// </summary>
+        /// <param name="applicationID">ID приложения vk.com</param>
+        /// <param name="userAccessToken">Token, полученные при OAuth авторизации</param>
         public VKAPI(int applicationID, string userAccessToken)
         {
             appId = applicationID;
@@ -46,9 +50,7 @@ namespace Загрузка_музыки_из_VK
                    Application.Exit();
                 }
              */
-                
-           
-
+                         
             }
             
             string test = String.Join("&", from item in qs.AllKeys select item + "=" + qs[item]);
@@ -71,6 +73,13 @@ namespace Загрузка_музыки_из_VK
             return ExecuteCommand("users.get", qs);
         }
 
+        /// <summary>
+        /// Получить последние личные сообщения
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="needOutMessages">Нужны исходящие сообщения</param>
+        /// <param name="count">Количество сообщений</param>
+        /// <returns></returns>
         public XmlDocument getLastMessages(int uid, bool needOutMessages, int count)
         {
             NameValueCollection qs = new NameValueCollection();
@@ -88,6 +97,13 @@ namespace Загрузка_музыки_из_VK
         }
 
 
+        /// <summary>
+        /// Получить аудиозаписи
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="count">Количество</param>
+        /// <param name="offset">Смещение относительно начала</param>
+        /// <returns></returns>
         public XmlDocument getAudio(int uid, int count, int offset)
         {
             NameValueCollection qs = new NameValueCollection();
@@ -124,6 +140,13 @@ namespace Загрузка_музыки_из_VK
             return ExecuteCommand("audio.search", qs);
         }
 
+        /// <summary>
+        /// Получить посты, на которые были поставлены отметки "Мне нравится"
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="offset"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
         public XmlDocument getFavePosts(int uid, int offset, int count)
         {
             NameValueCollection qs = new NameValueCollection();
@@ -218,6 +241,32 @@ namespace Загрузка_музыки_из_VK
             }
 
             return ExecuteCommand("newsfeed.search", qs);
+        }
+
+        /// <summary>
+        /// Публикует новую запись на своей или чужой стене.
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="owner_id">идентификатор пользователя или сообщества, на стене которого должна быть опубликована запись.</param>
+        /// <param name="message">текст сообщения (является обязательным, если не задан параметр attachments) </param>
+        /// <returns></returns>
+        public XmlDocument wallPost(int uid, int owner_id, string message)
+        {
+            NameValueCollection qs = new NameValueCollection();
+            qs["uid"] = uid.ToString();
+            qs["owner_id"] = owner_id.ToString();
+            qs["message"] = message;
+
+            return ExecuteCommand("wall.post", qs);
+        }
+
+        public XmlDocument getWallUploadServer(string group_id)
+        {
+            NameValueCollection qs = new NameValueCollection();
+            qs["group_id"] = group_id;
+
+
+            return ExecuteCommand("photos.getWallUploadServer", qs);
         }
 
     }
