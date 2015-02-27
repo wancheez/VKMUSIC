@@ -269,5 +269,25 @@ namespace Загрузка_музыки_из_VK
             return ExecuteCommand("photos.getWallUploadServer", qs);
         }
 
+        /// <summary>
+        /// Возвращает список аудиозаписей из раздела "Популярное"
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="count">количество возвращаемых аудиозаписей</param>
+        /// <param name="offset">смещение, необходимое для выборки определенного подмножества аудиозаписей</param>
+        /// <param name="only_eng">false – возвращать только зарубежные аудиозаписи. true – возвращать все аудиозаписи</param>
+        /// <returns></returns>
+        public XmlDocument audioGetPopular(int uid, int count, int offset, bool only_eng = false)
+        {
+            NameValueCollection qs = new NameValueCollection();
+            qs["uid"] = uid.ToString();
+            qs["offset"] = offset.ToString();//Смещение относительно начала списка аудиозаписей
+            qs["count"] = count.ToString(); //количество аудиозаписей, информацию о которых необходимо вернуть. Максимальное значение — 6000. 
+            qs["only_eng"] = only_eng ? "1" : "0";
+
+            return ExecuteCommand("audio.getPopular", qs);
+        }
+
+
     }
 }

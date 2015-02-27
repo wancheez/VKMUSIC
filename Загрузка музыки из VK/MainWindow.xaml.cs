@@ -210,7 +210,13 @@ namespace Загрузка_музыки_из_VK
             if (isAuthorised)
             {
                 XmlDocument audioXml;
-                audioXml = vkApiClass.getAudio(userId, count, offset);
+                switch (currentCatalog)
+                {
+                    case 0: audioXml = vkApiClass.getAudio(userId, count, offset); break;
+                    case 1: audioXml = vkApiClass.audioGetPopular(userId, count, offset); break;
+                    default: audioXml = vkApiClass.getAudio(userId, count, offset); break;
+                }
+               
                 nodeList = audioXml.SelectNodes("response/audio");
                 for(int i=0; i<nodeList.Count; i++){
                     audioItems audioIte = new audioItems();
@@ -274,6 +280,7 @@ namespace Загрузка_музыки_из_VK
                 }
             }
         }
+
 
         /// <summary>
         /// Получить и вывести в таблицу аудиозаписи из всей социальной сети
@@ -359,6 +366,7 @@ namespace Загрузка_музыки_из_VK
             if (fb.ShowDialog() == System.Windows.Forms.DialogResult.OK) //Если пользователь не выберет папку, загрузка не начнется
             {
                 downloadAdress = fb.SelectedPath;
+                
             
             for (int i = audioToDownload.Count; i < currentAudioList.Count; i++)
             {
@@ -366,8 +374,12 @@ namespace Загрузка_музыки_из_VK
                 {
                     audioItems a = currentAudioList[i];
                     audioToDownload.Add(currentAudioList[i]);//Составляем очередь загрузки
+                    currentAudioList[i].audioChecked = false;
                 }
             }
+            dataGridView1.ItemsSource = null;
+            dataGridView1.ItemsSource = currentAudioList;
+
             if (audioToDownload.Count != 0&&!downloading)
             {
                 progressBar_download.Visibility = System.Windows.Visibility.Visible;
@@ -565,7 +577,15 @@ namespace Загрузка_музыки_из_VK
 
         private void Button_Popular_Click(object sender, RoutedEventArgs e)
         {
-
+            if (currentCatalog != 1)
+            {
+                currentCatalog = 1;
+                currentAudioList.Clear();
+                currentOffset = 0;
+                searchUserAudio = true;
+                textBox_searchGlobalAudio.Text = "";
+                getAudioFunc();
+            }
         }
 
         private void Button_MyAudio_Click(object sender, RoutedEventArgs e)
@@ -696,6 +716,14 @@ namespace Загрузка_музыки_из_VK
             WebResponse response = request.GetResponse();
             Stream data = response.GetResponseStream();
             int x;
+        }
+
+        private void textBox_searchGlobalAudio_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                button_find_Click(sender, null);
+            }
         }
 
   
