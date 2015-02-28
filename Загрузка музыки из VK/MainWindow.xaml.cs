@@ -119,7 +119,8 @@ namespace Загрузка_музыки_из_VK
                         myStackPanel.Orientation = Orientation.Horizontal;
                         Image img = new Image();
                         img.Source = new BitmapImage(new Uri("Resources/Login-01.png", UriKind.Relative));
-                        
+                        img.Width = 21;
+                        img.Height = 16;
                         myStackPanel.Children.Add(img);
                         TextBlock txt = new TextBlock();
                         txt.Text = "Authorised";
@@ -128,7 +129,7 @@ namespace Загрузка_музыки_из_VK
                         txt.FontSize = 14;
                         myStackPanel.Children.Add(txt);
                         button_auth.Content = myStackPanel;
-                        profileXml = vkApiClass.getProfile(userId);
+                        profileXml = vkApiClass.getProfile(userId);//TODO Рядом с кнопкой авторизации вывести имя и фамилию вместо слова Auhorized
                         
                         getAudioFunc();
                         try
@@ -160,6 +161,7 @@ namespace Загрузка_музыки_из_VK
             if (!isAuthorised)
             {
                 auth = new Auth(appId,true);
+                isAuthorised = true;
             }
             else
             {
@@ -181,9 +183,32 @@ namespace Загрузка_музыки_из_VK
             if (isAuthorised)
             {
                 vkApiClass = new VKAPI(appId, accessToken);
+                //Разукрашиваем кнопку авторизации
                 var bc = new BrushConverter();
-                button_auth.Background = (Brush)bc.ConvertFrom("#FF36638E");
-                button_auth.Content = "Logout";                
+                LinearGradientBrush myLinearGradientBrush =
+                new LinearGradientBrush();
+                myLinearGradientBrush.StartPoint = new Point(0.5, 0);
+                myLinearGradientBrush.EndPoint = new Point(0.5, 1);
+                myLinearGradientBrush.GradientStops.Add(
+                    new GradientStop((Color)ColorConverter.ConvertFromString("#FF5C7EA3"), 0.0));
+                myLinearGradientBrush.GradientStops.Add(
+                    new GradientStop((Color)ColorConverter.ConvertFromString("#FF455D83"), 1));
+                button_auth.Background = myLinearGradientBrush;
+
+                StackPanel myStackPanel = new StackPanel();
+                myStackPanel.Orientation = Orientation.Horizontal;
+                Image img = new Image();
+                img.Source = new BitmapImage(new Uri("Resources/Login-01.png", UriKind.Relative));
+                img.Width = 21;
+                img.Height = 16;
+                myStackPanel.Children.Add(img);
+                TextBlock txt = new TextBlock();
+                txt.Text = "Authorised";
+                txt.Foreground = Brushes.White;
+                txt.Background = Brushes.Transparent;
+                txt.FontSize = 14;
+                myStackPanel.Children.Add(txt);
+                button_auth.Content = myStackPanel;
                 profileXml = vkApiClass.getProfile(userId);                
                 getAudioFunc(N);
             }
@@ -214,6 +239,7 @@ namespace Загрузка_музыки_из_VK
                 {
                     case 0: audioXml = vkApiClass.getAudio(userId, count, offset); break;
                     case 1: audioXml = vkApiClass.audioGetPopular(userId, count, offset); break;
+                    case 2: audioXml = vkApiClass.audiogetRecommendations(userId, count, offset); break;
                     default: audioXml = vkApiClass.getAudio(userId, count, offset); break;
                 }
                
@@ -572,7 +598,15 @@ namespace Загрузка_музыки_из_VK
 
         private void Button_Reccomend_Click(object sender, RoutedEventArgs e)
         {
-
+            if (currentCatalog != 2)
+            {
+                currentCatalog = 2;
+                currentAudioList.Clear();
+                currentOffset = 0;
+               // searchUserAudio = true;
+                textBox_searchGlobalAudio.Text = "";
+                getAudioFunc();
+            }
         }
 
         private void Button_Popular_Click(object sender, RoutedEventArgs e)
@@ -582,7 +616,7 @@ namespace Загрузка_музыки_из_VK
                 currentCatalog = 1;
                 currentAudioList.Clear();
                 currentOffset = 0;
-                searchUserAudio = true;
+                //searchUserAudio = true;
                 textBox_searchGlobalAudio.Text = "";
                 getAudioFunc();
             }
@@ -700,6 +734,7 @@ namespace Загрузка_музыки_из_VK
             }
         }
 
+        //Это не относится к приложению
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             vkApiClass.wallPost(userId, userId, "Тест VK api wall post");

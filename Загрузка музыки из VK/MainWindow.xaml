@@ -56,10 +56,8 @@
 			Visibility="Hidden" 
             MediaEnded="mediaPlayer_MediaEnded"      
             MediaOpened="mediaPlayer_MediaOpened"/>
-        <Button Grid.Column="1" x:Name="button_auth"  Margin="0,16,11,0" VerticalAlignment="Top" RenderTransformOrigin="-3.735,0.36" Click="button_auth_Click"  Background="Tomato" HorizontalAlignment="Right" Height="23" Width="100" FontSize="16" Foreground="White" Grid.ColumnSpan="2">
-        </Button>
-        <TextBox x:Name="textBox_searchGlobalAudio" Margin="97,43,11,0" TextWrapping="Wrap" ToolTip="Typе here artist's or music's name" Grid.ColumnSpan="3" Height="23"  VerticalAlignment="Top" KeyUp="textBox_searchGlobalAudio_KeyUp" />
-        <Button x:Name="button_find"  VerticalAlignment="Top" Margin="10,43,0,0" Height="23" Click="button_find_Click" HorizontalAlignment="Left" Width="87" BorderBrush="{x:Null}" Foreground="White">
+        <TextBox x:Name="textBox_searchGlobalAudio" Margin="97,43,11,0" TextWrapping="Wrap" ToolTip="Typе here artist or music name" Grid.ColumnSpan="3" Height="23"  VerticalAlignment="Top" KeyUp="textBox_searchGlobalAudio_KeyUp" />
+        <Button x:Name="button_find"  VerticalAlignment="Top" Margin="8,43,0,0" Height="23" Click="button_find_Click" HorizontalAlignment="Left" Width="89" BorderBrush="{x:Null}" Foreground="White">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF5C7EA3" Offset="0"/>
@@ -222,8 +220,8 @@
             </Slider.RenderTransform>
         </Slider>
         <TextBlock x:Name="songNameLabel" Margin="10,0,47,42" RenderTransformOrigin="9.237,-1.5" FontSize="21" FontFamily="Segoe WP Black" Grid.ColumnSpan="3" Height="36" VerticalAlignment="Bottom" Grid.Row="1"/>
-        <Grid Grid.ColumnSpan="3" Margin="8,16,21,332">
-            <Button x:Name="Button_MyAudio" HorizontalAlignment="Left" Margin="210,1,0,0" VerticalAlignment="Top"  Height="23" Width="100" FontSize="16" Click="Button_MyAudio_Click" >
+        <Grid Grid.ColumnSpan="3" Margin="8,16,11,332">
+            <Button x:Name="Button_MyAudio" HorizontalAlignment="Left" Margin="210,-8,0,0" VerticalAlignment="Top"  Height="32" Width="100" FontSize="16" Click="Button_MyAudio_Click" >
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FF5C7EA3" Offset="0"/>
@@ -235,7 +233,7 @@
                     <TextBlock Text="My audio" Width="56" Foreground="White" FontSize="14"/>
                 </StackPanel>
             </Button>
-            <Button x:Name="Button_Popular" HorizontalAlignment="Left" Margin="105,0,0,0" VerticalAlignment="Top"  Height="23" Width="100" FontSize="16" Click="Button_Popular_Click" >
+            <Button x:Name="Button_Popular" HorizontalAlignment="Left" Margin="105,-8,0,0" VerticalAlignment="Top"  Height="32" Width="100" FontSize="16" Click="Button_Popular_Click" >
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FF5C7EA3" Offset="0"/>
@@ -247,7 +245,7 @@
                     <TextBlock Text="Popular" Width="56" Foreground="White" FontSize="14"/>
                 </StackPanel>
             </Button>
-            <Button x:Name="Button_Reccomend" VerticalAlignment="Top"  Height="23" FontSize="16" HorizontalAlignment="Left" Width="100" Click="Button_Reccomend_Click">
+            <Button x:Name="Button_Reccomend" VerticalAlignment="Top"  Height="32" FontSize="16" HorizontalAlignment="Left" Width="100" Click="Button_Reccomend_Click" Margin="0,-8,0,0">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FF5C7EA3" Offset="0"/>
@@ -259,6 +257,7 @@
                     <TextBlock  Text="Reccomend" Width="75"  Foreground="White" FontSize="14"/>
                 </StackPanel>
             </Button>
+            <Button x:Name="button_auth"  Margin="0,-8,0,0" VerticalAlignment="Top" RenderTransformOrigin="-3.735,0.36" Click="button_auth_Click"  Background="Tomato" HorizontalAlignment="Right" Height="32" Width="97" FontSize="16" Foreground="White"/>
 
         </Grid>
         <Image Grid.Column="2" HorizontalAlignment="Left" Height="16" Margin="71,88,0,0" Grid.Row="1" VerticalAlignment="Top" Width="15" Source="Resources/Volume11.png"/>

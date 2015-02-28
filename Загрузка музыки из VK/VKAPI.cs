@@ -288,6 +288,25 @@ namespace Загрузка_музыки_из_VK
             return ExecuteCommand("audio.getPopular", qs);
         }
 
+        /// <summary>
+        /// Возвращает список рекомендуемых аудиозаписей на основе списка воспроизведения заданного пользователя или на основе одной выбранной аудиозаписи
+        /// </summary>
+        /// <param name="uid">идентификатор пользователя для получения списка рекомендаций на основе его набора аудиозаписей</param>
+        /// <param name="count">количество возвращаемых аудиозаписей</param>
+        /// <param name="offset">смещение относительно первой найденной аудиозаписи для выборки определенного подмножества</param>
+        /// <param name="shuffle">включен случайный порядок</param>
+        /// <returns></returns>
+        public XmlDocument audiogetRecommendations(int uid, int count, int offset, bool shuffle = false)
+        {
+            NameValueCollection qs = new NameValueCollection();
+            qs["user_id"] = uid.ToString();
+            qs["offset"] = offset.ToString();//Смещение относительно начала списка аудиозаписей
+            qs["count"] = count.ToString(); //количество аудиозаписей, информацию о которых необходимо вернуть. Максимальное значение — 6000. 
+            qs["shuffle"] = shuffle ? "1" : "0";
+
+            return ExecuteCommand("audio.getRecommendations", qs);
+        }
+
 
     }
 }
