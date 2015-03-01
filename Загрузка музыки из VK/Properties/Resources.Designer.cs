@@ -63,9 +63,9 @@ namespace Загрузка_музыки_из_VK.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Arrow_next {
+        public static System.Drawing.Bitmap About {
             get {
-                object obj = ResourceManager.GetObject("Arrow_next", resourceCulture);
+                object obj = ResourceManager.GetObject("About", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace Загрузка_музыки_из_VK.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Arrow_pred {
+        public static System.Drawing.Bitmap Arrow_next {
             get {
-                object obj = ResourceManager.GetObject("Arrow_pred", resourceCulture);
+                object obj = ResourceManager.GetObject("Arrow_next", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,16 +163,6 @@ namespace Загрузка_музыки_из_VK.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap play_active {
-            get {
-                object obj = ResourceManager.GetObject("play_active", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
         public static System.Drawing.Bitmap play_active11 {
             get {
                 object obj = ResourceManager.GetObject("play_active11", resourceCulture);
@@ -206,16 +196,6 @@ namespace Загрузка_музыки_из_VK.Properties {
         public static System.Drawing.Bitmap ThumbsUp {
             get {
                 object obj = ResourceManager.GetObject("ThumbsUp", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap Volume_Speaker {
-            get {
-                object obj = ResourceManager.GetObject("Volume_Speaker", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

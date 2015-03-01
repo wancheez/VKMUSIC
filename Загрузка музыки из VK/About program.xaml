@@ -1,0 +1,21 @@
+﻿<Window x:Class="Загрузка_музыки_из_VK.About_program"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="About" Height="159" Width="300" ResizeMode="NoResize">
+    <Grid>
+        <RichTextBox HorizontalAlignment="Left" Height="100" Margin="10,10,0,0" VerticalAlignment="Top" Width="272" IsReadOnly="True">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="Ivan Erokhin" />
+                    <LineBreak />
+                    <Hyperlink NavigateUri="http://vk.com/wancheez">http://vk.com/wancheez</Hyperlink>
+                        <LineBreak />
+                    <Hyperlink>http://wancheez.ucoz.ru</Hyperlink>
+                    <LineBreak />
+                        <Hyperlink>e-mail:   wancheez@gmail.com</Hyperlink>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+
+    </Grid>
+</Window>

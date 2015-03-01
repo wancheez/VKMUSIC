@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>myicon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -56,6 +59,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="About program.xaml.cs">
+      <DependentUpon>About program.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -64,6 +70,10 @@
     <Compile Include="VKAPI.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Page Include="About program.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Auth.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -110,11 +120,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\play-active.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\play-active11.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -147,9 +152,6 @@
     <Resource Include="Resources\Arrow next.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Arrow pred.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Media Next1.png" />
   </ItemGroup>
   <ItemGroup>
@@ -165,10 +167,13 @@
     <Resource Include="Resources\Media Pause.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Volume-Speaker.png" />
+    <Resource Include="Resources\Volume11.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Volume11.png" />
+    <Resource Include="Resources\About.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="myicon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

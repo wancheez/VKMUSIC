@@ -78,9 +78,9 @@ namespace Загрузка_музыки_из_VK
             client.DownloadFileCompleted +=client_DownloadFileCompleted;
             client.DownloadProgressChanged += client_DownloadProgressChanged;
             //Авторизация
-            if (File.Exists(Environment.GetEnvironmentVariable("appdata") + "\\VKPLAYER\\userID.txt"))
+            if (File.Exists("userID.txt"))
             {
-                StreamReader streamReader = new StreamReader(Environment.GetEnvironmentVariable("appdata") + "\\VKPLAYER\\userID.txt");
+                StreamReader streamReader = new StreamReader("userID.txt");
                 string str1 = "";
                 string str2 = "";
 
@@ -93,7 +93,7 @@ namespace Загрузка_музыки_из_VK
                     accessToken = str1;
                     userId = Convert.ToInt32(str2);
                     vkApiClass = new VKAPI(appId, accessToken);
-                    isAuthorised = true;
+                    
                     XmlDocument profileXml;
                     string userName = "";
                     profileXml = vkApiClass.getProfile(userId);
@@ -104,33 +104,9 @@ namespace Загрузка_музыки_из_VK
                         vkApiClass = new VKAPI(appId, accessToken);
 
                         //Разукрашиваем кнопку авторизации
-                        var bc = new BrushConverter();
-                        LinearGradientBrush myLinearGradientBrush =
-                        new LinearGradientBrush();
-                        myLinearGradientBrush.StartPoint = new Point(0.5,0);
-                        myLinearGradientBrush.EndPoint = new Point(0.5,1);
-                        myLinearGradientBrush.GradientStops.Add(
-                            new GradientStop((Color)ColorConverter.ConvertFromString("#FF5C7EA3"), 0.0));
-                        myLinearGradientBrush.GradientStops.Add(
-                            new GradientStop((Color)ColorConverter.ConvertFromString("#FF455D83"), 1));
-                        button_auth.Background = myLinearGradientBrush;
-                        
-                        StackPanel myStackPanel = new StackPanel();
-                        myStackPanel.Orientation = Orientation.Horizontal;
-                        Image img = new Image();
-                        img.Source = new BitmapImage(new Uri("Resources/Login-01.png", UriKind.Relative));
-                        img.Width = 21;
-                        img.Height = 16;
-                        myStackPanel.Children.Add(img);
-                        TextBlock txt = new TextBlock();
-                        txt.Text = "Authorised";
-                        txt.Foreground = Brushes.White;
-                        txt.Background = Brushes.Transparent;
-                        txt.FontSize = 14;
-                        myStackPanel.Children.Add(txt);
-                        button_auth.Content = myStackPanel;
+                        Color_AuthButton(true);
                         profileXml = vkApiClass.getProfile(userId);//TODO Рядом с кнопкой авторизации вывести имя и фамилию вместо слова Auhorized
-                        
+                        isAuthorised = true;
                         getAudioFunc();
                         try
                         {
@@ -166,10 +142,58 @@ namespace Загрузка_музыки_из_VK
             else
             {
                 auth = new Auth(appId, false);
+                isAuthorised = false;
+                userId = 0;
             }
                 auth.Owner = this;
                 auth.Closed += auth_Closed;
                 auth.Show();                     
+        }
+
+        /// <summary>
+        /// Разукрасить кнопку авторизации
+        /// </summary>
+        /// <param name="auth">true - авторизован, false - не авторизован</param>
+        private void Color_AuthButton(bool auth)
+        {
+            var bc = new BrushConverter();
+            LinearGradientBrush myLinearGradientBrush =
+            new LinearGradientBrush();
+            myLinearGradientBrush.StartPoint = new Point(0.5, 0);
+            myLinearGradientBrush.EndPoint = new Point(0.5, 1);
+            myLinearGradientBrush.GradientStops.Add(
+                new GradientStop((Color)ColorConverter.ConvertFromString("#FF5C7EA3"), 0.0));
+            TextBlock txt = new TextBlock();
+            if (auth)
+            {
+               
+                myLinearGradientBrush.GradientStops.Add(
+                    new GradientStop((Color)ColorConverter.ConvertFromString("#FF455D83"), 1));
+                txt.Text = "Authorised";
+               
+            }
+            else
+            {
+                myLinearGradientBrush.GradientStops.Add(
+                   new GradientStop(Colors.Tomato, 1));
+                txt.Text = "Authorise";
+            }
+            button_auth.Background = myLinearGradientBrush;
+
+            StackPanel myStackPanel = new StackPanel();
+            myStackPanel.Orientation = Orientation.Horizontal;
+            Image img = new Image();
+            img.Source = new BitmapImage(new Uri("Resources/Login-01.png", UriKind.Relative));
+            img.Width = 21;
+            img.Height = 16;
+            myStackPanel.Children.Add(img);
+            
+           
+            txt.Foreground = Brushes.White;
+            txt.Background = Brushes.Transparent;
+            txt.FontSize = 14;
+            myStackPanel.Children.Add(txt);
+            button_auth.Content = myStackPanel;
         }
 
         /// <summary>
@@ -179,36 +203,13 @@ namespace Загрузка_музыки_из_VK
         /// <param name="e"></param>
         void auth_Closed(object sender, EventArgs e)
         {
-            
+           
             if (isAuthorised)
             {
+               
                 vkApiClass = new VKAPI(appId, accessToken);
                 //Разукрашиваем кнопку авторизации
-                var bc = new BrushConverter();
-                LinearGradientBrush myLinearGradientBrush =
-                new LinearGradientBrush();
-                myLinearGradientBrush.StartPoint = new Point(0.5, 0);
-                myLinearGradientBrush.EndPoint = new Point(0.5, 1);
-                myLinearGradientBrush.GradientStops.Add(
-                    new GradientStop((Color)ColorConverter.ConvertFromString("#FF5C7EA3"), 0.0));
-                myLinearGradientBrush.GradientStops.Add(
-                    new GradientStop((Color)ColorConverter.ConvertFromString("#FF455D83"), 1));
-                button_auth.Background = myLinearGradientBrush;
-
-                StackPanel myStackPanel = new StackPanel();
-                myStackPanel.Orientation = Orientation.Horizontal;
-                Image img = new Image();
-                img.Source = new BitmapImage(new Uri("Resources/Login-01.png", UriKind.Relative));
-                img.Width = 21;
-                img.Height = 16;
-                myStackPanel.Children.Add(img);
-                TextBlock txt = new TextBlock();
-                txt.Text = "Authorised";
-                txt.Foreground = Brushes.White;
-                txt.Background = Brushes.Transparent;
-                txt.FontSize = 14;
-                myStackPanel.Children.Add(txt);
-                button_auth.Content = myStackPanel;
+                Color_AuthButton(true);
                 profileXml = vkApiClass.getProfile(userId);                
                 getAudioFunc(N);
             }
@@ -216,7 +217,8 @@ namespace Загрузка_музыки_из_VK
             {
                 if(currentAudioList!=null)
                 currentAudioList.Clear();
-                button_auth.Background = Brushes.Tomato;
+                Color_AuthButton(false);
+                isAuthorised = false;
                // button_auth.Content = "Login";                
             }
         }
@@ -296,14 +298,21 @@ namespace Загрузка_музыки_из_VK
 
         private void button_find_Click(object sender, RoutedEventArgs e)
         {
-            if (currentCatalog != 3)
+            if (isAuthorised)
             {
-                currentCatalog = 3;
-                currentAudioList.Clear();
-                if (textBox_searchGlobalAudio.Text != "")
+                if (currentCatalog != 3)
                 {
-                    getGlobalAudioFunc(N, 0, textBox_searchGlobalAudio.Text);
+                    currentCatalog = 3;
+                    currentAudioList.Clear();
+                    if (textBox_searchGlobalAudio.Text != "")
+                    {
+                        getGlobalAudioFunc(N, 0, textBox_searchGlobalAudio.Text);
+                    }
                 }
+            }
+            else
+            {
+                MessageBox.Show("Сначала нужно авторизоваться", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
 
@@ -351,15 +360,23 @@ namespace Загрузка_музыки_из_VK
         /// <param name="e"></param>
         private void button_moreOffset_Click(object sender, EventArgs e)
         {
-            currentOffset+=N;
-            if (searchUserAudio)
+            if (isAuthorised)
             {
-                getAudioFunc(N, currentOffset);
+                currentOffset += N;
+                if (searchUserAudio)
+                {
+                    getAudioFunc(N, currentOffset);
+                }
+                else
+                {
+                    getGlobalAudioFunc(N, currentOffset, textBox_searchGlobalAudio.Text);
+                }
             }
             else
             {
-                getGlobalAudioFunc(N,currentOffset,textBox_searchGlobalAudio.Text);
+                MessageBox.Show("Сначала нужно авторизоваться", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
+             
         }
 
        /// <summary>
@@ -369,15 +386,22 @@ namespace Загрузка_музыки_из_VK
        /// <param name="e"></param>
         private void button_lessOffset_Click(object sender, EventArgs e)
         {
-            if(currentOffset>10)
-            currentOffset -= N;
-            if (searchUserAudio)
+            if (isAuthorised)
             {
-                getAudioFunc(N, currentOffset);
+                if (currentOffset > 10)
+                    currentOffset -= N;
+                if (searchUserAudio)
+                {
+                    getAudioFunc(N, currentOffset);
+                }
+                else
+                {
+                    getGlobalAudioFunc(N, currentOffset, textBox_searchGlobalAudio.Text);
+                }
             }
             else
             {
-                getGlobalAudioFunc(N, currentOffset, textBox_searchGlobalAudio.Text);
+                MessageBox.Show("Сначала нужно авторизоваться", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
 
@@ -388,6 +412,7 @@ namespace Загрузка_музыки_из_VK
             if (isAuthorised)
             {
             //audioToDownload.Clear();           
+                int selectedIndex = dataGridView1.SelectedIndex;//Переменная, на случай, если пользователь не отметил записи. Тогда скачается та, что выделена
             System.Windows.Forms.FolderBrowserDialog fb = new System.Windows.Forms.FolderBrowserDialog();
             if (fb.ShowDialog() == System.Windows.Forms.DialogResult.OK) //Если пользователь не выберет папку, загрузка не начнется
             {
@@ -412,6 +437,18 @@ namespace Загрузка_музыки_из_VK
                 downloading = true;
                 label_downloadingFileName.Content = audioToDownload[0].artist + " - " + audioToDownload[0].title;
                 client.DownloadFileAsync(new Uri(audioToDownload[0].source), downloadAdress + "\\" + audioToDownload[0].artist + " - " + audioToDownload[0].title + ".mp3");
+            }
+            else
+            {
+                if (selectedIndex != -1&&!downloading)
+                {
+                    progressBar_download.Visibility = System.Windows.Visibility.Visible;
+                downloading = true;
+                audioItems a = currentAudioList[selectedIndex];
+                audioToDownload.Add(currentAudioList[selectedIndex]);//Составляем очередь загрузки
+                label_downloadingFileName.Content = audioToDownload[0].artist + " - " + audioToDownload[0].title;
+                client.DownloadFileAsync(new Uri(audioToDownload[0].source), downloadAdress + "\\" + audioToDownload[0].artist + " - " + audioToDownload[0].title + ".mp3");
+                }
             }
             
             }
@@ -449,47 +486,53 @@ namespace Загрузка_музыки_из_VK
         private void ButtonPlay_Click(object sender, RoutedEventArgs e)
             //Если запись на паузе, начинаем ее проигрывать, если играет, ставим на паузу. Если не на паузе и ничего не выбрано, то играем первую
         {
-            if (isPaused)
+            if (isAuthorised)
             {
-                
-                StackPanel myStackPanel = new StackPanel();
-                myStackPanel.Orientation = Orientation.Horizontal;
-                Image img = new Image();
-                img.Source = new BitmapImage(new Uri("Resources/Media Pause.png", UriKind.Relative));
-
-                img.Height = 22;
-                img.Width = 37;
-                myStackPanel.Children.Add(img);
-
-                button_playPause.Content = myStackPanel;
-
-                num = dataGridView1.SelectedIndex;
-                if (num == -1)
+                if (isPaused)
                 {
-                    num = 0;
-                    playSelectedAudio(num);
+
+                    StackPanel myStackPanel = new StackPanel();
+                    myStackPanel.Orientation = Orientation.Horizontal;
+                    Image img = new Image();
+                    img.Source = new BitmapImage(new Uri("Resources/Media Pause.png", UriKind.Relative));
+
+                    img.Height = 22;
+                    img.Width = 37;
+                    myStackPanel.Children.Add(img);
+
+                    button_playPause.Content = myStackPanel;
+
+                    num = dataGridView1.SelectedIndex;
+                    if (num == -1)
+                    {
+                        num = 0;
+                        playSelectedAudio(num);
+                    }
+                    else
+                        mediaPlayer.Play();
+                    isPaused = false;
+
+
                 }
                 else
-                    mediaPlayer.Play();
-                isPaused = false;
-                
-                
+                {
+                    mediaPlayer.Pause();
+                    isPaused = true;
+                    StackPanel myStackPanel = new StackPanel();
+                    myStackPanel.Orientation = Orientation.Horizontal;
+                    Image img = new Image();
+                    img.Source = new BitmapImage(new Uri("Resources/Media-Play1.png", UriKind.Relative));
+                    img.Height = 22;
+                    img.Width = 37;
+                    myStackPanel.Children.Add(img);
+
+                    button_playPause.Content = myStackPanel;
+                }
             }
             else
             {
-                mediaPlayer.Pause();
-                isPaused = true;
-                StackPanel myStackPanel = new StackPanel();
-                myStackPanel.Orientation = Orientation.Horizontal;
-                Image img = new Image();
-                img.Source = new BitmapImage(new Uri("Resources/Media-Play1.png", UriKind.Relative));
-                img.Height = 22;
-                img.Width = 37;
-                myStackPanel.Children.Add(img);
-
-                button_playPause.Content = myStackPanel;
+                MessageBox.Show("Сначала нужно авторизоваться", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
-
         }
 
         /// <summary>
@@ -498,29 +541,35 @@ namespace Загрузка_музыки_из_VK
         /// <param name="i">Показывает, на сколько смещена запись от первой</param>
         private void playSelectedAudio(int i=0)
         {
-
-            if (dataGridView1.SelectedIndex != -1 || i!=0)
+            if (isAuthorised)
             {
-                dataGridView1.SelectedIndex = i;
-                mediaPlayer.Source = new Uri((String)(currentAudioList[i].source + ".mp3").Replace("https", "http"));
-                // текущий трек dataGridView1.SelectedIndex;
-                songNameLabel.Text = currentAudioList[dataGridView1.SelectedIndex ].artist + " - " + currentAudioList[dataGridView1.SelectedIndex].title;
-                String mins = currentAudioList[dataGridView1.SelectedIndex].duration.Substring(0, currentAudioList[dataGridView1.SelectedIndex].duration.IndexOf(":"));
-                String secs = currentAudioList[dataGridView1.SelectedIndex].duration.Substring(currentAudioList[dataGridView1.SelectedIndex].duration.IndexOf(":")+1);
-                TimeSlider.Maximum = Convert.ToInt32(mins)*60 + Convert.ToInt32(secs);
-                mediaPlayer.Play();
-            }
+                if (dataGridView1.SelectedIndex != -1 || i != 0)
+                {
+                    dataGridView1.SelectedIndex = i;
+                    mediaPlayer.Source = new Uri((String)(currentAudioList[i].source + ".mp3").Replace("https", "http"));
+                    // текущий трек dataGridView1.SelectedIndex;
+                    songNameLabel.Text = currentAudioList[dataGridView1.SelectedIndex].artist + " - " + currentAudioList[dataGridView1.SelectedIndex].title;
+                    String mins = currentAudioList[dataGridView1.SelectedIndex].duration.Substring(0, currentAudioList[dataGridView1.SelectedIndex].duration.IndexOf(":"));
+                    String secs = currentAudioList[dataGridView1.SelectedIndex].duration.Substring(currentAudioList[dataGridView1.SelectedIndex].duration.IndexOf(":") + 1);
+                    TimeSlider.Maximum = Convert.ToInt32(mins) * 60 + Convert.ToInt32(secs);
+                    mediaPlayer.Play();
+                }
                 //Если ничего не выбрано и нажали плей, то играем первую в списке и наводим фокус на нее
+                else
+                {
+                    dataGridView1.SelectedIndex = 0;
+                    mediaPlayer.Source = new Uri((String)(currentAudioList[dataGridView1.SelectedIndex].source + ".mp3").Replace("https", "http"));
+                    // текущий трек dataGridView1.SelectedIndex;
+                    songNameLabel.Text = currentAudioList[dataGridView1.SelectedIndex].artist + " - " + currentAudioList[dataGridView1.SelectedIndex].title;
+                    String mins = currentAudioList[dataGridView1.SelectedIndex].duration.Substring(0, currentAudioList[dataGridView1.SelectedIndex].duration.IndexOf(":"));
+                    String secs = currentAudioList[dataGridView1.SelectedIndex].duration.Substring(currentAudioList[dataGridView1.SelectedIndex].duration.IndexOf(":") + 1);
+                    TimeSlider.Maximum = Convert.ToInt32(mins) * 60 + Convert.ToInt32(secs);
+                    mediaPlayer.Play();
+                }
+            }
             else
             {
-                dataGridView1.SelectedIndex = 0;
-                mediaPlayer.Source = new Uri((String)(currentAudioList[dataGridView1.SelectedIndex].source + ".mp3").Replace("https", "http"));
-                // текущий трек dataGridView1.SelectedIndex;
-                songNameLabel.Text = currentAudioList[dataGridView1.SelectedIndex].artist + " - " + currentAudioList[dataGridView1.SelectedIndex].title;
-                String mins = currentAudioList[dataGridView1.SelectedIndex].duration.Substring(0, currentAudioList[dataGridView1.SelectedIndex].duration.IndexOf(":"));
-                String secs = currentAudioList[dataGridView1.SelectedIndex].duration.Substring(currentAudioList[dataGridView1.SelectedIndex].duration.IndexOf(":") + 1);
-                TimeSlider.Maximum = Convert.ToInt32(mins) * 60 + Convert.ToInt32(secs);
-                mediaPlayer.Play();
+                MessageBox.Show("Сначала нужно авторизоваться", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
        
@@ -571,23 +620,30 @@ namespace Загрузка_музыки_из_VK
         /// <param name="e"></param>
         private void TimeSlider_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (isPaused)
+            if (isAuthorised)
             {
-                StackPanel myStackPanel = new StackPanel();
-                myStackPanel.Orientation = Orientation.Horizontal;
-                Image img = new Image();
-                img.Source = new BitmapImage(new Uri("Resources/Media Pause.png", UriKind.Relative));
+                if (isPaused)
+                {
+                    StackPanel myStackPanel = new StackPanel();
+                    myStackPanel.Orientation = Orientation.Horizontal;
+                    Image img = new Image();
+                    img.Source = new BitmapImage(new Uri("Resources/Media Pause.png", UriKind.Relative));
 
-                img.Height = 22;
-                img.Width = 37;
-                myStackPanel.Children.Add(img);
+                    img.Height = 22;
+                    img.Width = 37;
+                    myStackPanel.Children.Add(img);
 
-                button_playPause.Content = myStackPanel;
-                isPaused = false;
+                    button_playPause.Content = myStackPanel;
+                    isPaused = false;
+                }
+                mediaPlayer.Pause();
+                mediaPlayer.Position = TimeSpan.FromSeconds(TimeSlider.Value);
+                mediaPlayer.Play();
             }
-            mediaPlayer.Pause();
-            mediaPlayer.Position = TimeSpan.FromSeconds(TimeSlider.Value);
-            mediaPlayer.Play();
+            else
+            {
+                MessageBox.Show("Сначала нужно авторизоваться", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -598,139 +654,181 @@ namespace Загрузка_музыки_из_VK
 
         private void Button_Reccomend_Click(object sender, RoutedEventArgs e)
         {
-            if (currentCatalog != 2)
+            if (isAuthorised)
             {
-                currentCatalog = 2;
-                currentAudioList.Clear();
-                currentOffset = 0;
-               // searchUserAudio = true;
-                textBox_searchGlobalAudio.Text = "";
-                getAudioFunc();
+                if (currentCatalog != 2)
+                {
+                    currentCatalog = 2;
+                    currentAudioList.Clear();
+                    currentOffset = 0;
+                    // searchUserAudio = true;
+                    textBox_searchGlobalAudio.Text = "";
+                    getAudioFunc();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Сначала нужно авторизоваться", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
 
         private void Button_Popular_Click(object sender, RoutedEventArgs e)
         {
-            if (currentCatalog != 1)
+            if (isAuthorised)
             {
-                currentCatalog = 1;
-                currentAudioList.Clear();
-                currentOffset = 0;
-                //searchUserAudio = true;
-                textBox_searchGlobalAudio.Text = "";
-                getAudioFunc();
+                if (currentCatalog != 1)
+                {
+                    currentCatalog = 1;
+                    currentAudioList.Clear();
+                    currentOffset = 0;
+                    //searchUserAudio = true;
+                    textBox_searchGlobalAudio.Text = "";
+                    getAudioFunc();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Сначала нужно авторизоваться", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
 
         private void Button_MyAudio_Click(object sender, RoutedEventArgs e)
         {
-            if (currentCatalog != 0)
+            if (isAuthorised)
             {
-                currentCatalog = 0;
-                currentAudioList.Clear();
-                currentOffset = 0;
-                searchUserAudio = true;
-                textBox_searchGlobalAudio.Text = "";
-                getAudioFunc();
+                if (currentCatalog != 0)
+                {
+                    currentCatalog = 0;
+                    currentAudioList.Clear();
+                    currentOffset = 0;
+                    searchUserAudio = true;
+                    textBox_searchGlobalAudio.Text = "";
+                    getAudioFunc();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Сначала нужно авторизоваться", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
 
         private void Button_NextTrack_Click(object sender, RoutedEventArgs e)
         {
-            if (isPaused)
+            if (isAuthorised)
             {
+                if (isPaused)
+                {
 
-                StackPanel myStackPanel = new StackPanel();
-                myStackPanel.Orientation = Orientation.Horizontal;
-                Image img = new Image();
-                img.Source = new BitmapImage(new Uri("Resources/Media Pause.png", UriKind.Relative));
+                    StackPanel myStackPanel = new StackPanel();
+                    myStackPanel.Orientation = Orientation.Horizontal;
+                    Image img = new Image();
+                    img.Source = new BitmapImage(new Uri("Resources/Media Pause.png", UriKind.Relative));
 
-                img.Height = 22;
-                img.Width = 37;
-                myStackPanel.Children.Add(img);
+                    img.Height = 22;
+                    img.Width = 37;
+                    myStackPanel.Children.Add(img);
 
-                button_playPause.Content = myStackPanel;
-                
-                num++;
-                playSelectedAudio(num);
-                isPaused = false;
+                    button_playPause.Content = myStackPanel;
+
+                    num++;
+                    playSelectedAudio(num);
+                    isPaused = false;
 
 
+                }
+                else
+                {
+                    num++;
+
+                    playSelectedAudio(num);
+                }
             }
             else
             {
-                num++;
-
-                playSelectedAudio(num);
+                MessageBox.Show("Сначала нужно авторизоваться", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
            
         }
 
         private void Button_PreviousTrack_Click(object sender, RoutedEventArgs e)
         {
-            if (isPaused)
+            if (isAuthorised)
             {
-
-                StackPanel myStackPanel = new StackPanel();
-                myStackPanel.Orientation = Orientation.Horizontal;
-                Image img = new Image();
-                img.Source = new BitmapImage(new Uri("Resources/Media Pause.png", UriKind.Relative));
-
-                img.Height = 22;
-                img.Width = 37;
-                myStackPanel.Children.Add(img);
-
-                button_playPause.Content = myStackPanel;
-
-                if (num >= 1)
+                if (isPaused)
                 {
-                    num--;
+
+                    StackPanel myStackPanel = new StackPanel();
+                    myStackPanel.Orientation = Orientation.Horizontal;
+                    Image img = new Image();
+                    img.Source = new BitmapImage(new Uri("Resources/Media Pause.png", UriKind.Relative));
+
+                    img.Height = 22;
+                    img.Width = 37;
+                    myStackPanel.Children.Add(img);
+
+                    button_playPause.Content = myStackPanel;
+
+                    if (num >= 1)
+                    {
+                        num--;
+                    }
+                    playSelectedAudio(num);
+                    isPaused = false;
+
+
                 }
-                playSelectedAudio(num);
-                isPaused = false;
+                else
+                {
+                    if (num >= 1)
+                    {
+                        num--;
+                    }
 
-
+                    playSelectedAudio(num);
+                }
             }
             else
             {
-                if (num >= 1)
-                {
-                    num--;
-                }
-
-                playSelectedAudio(num);
+                MessageBox.Show("Сначала нужно авторизоваться", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
            
         }
 
         private void ButtonTablePlay_Click(object sender, RoutedEventArgs e)
         {
-            if (isPaused)
+            if (isAuthorised)
             {
+                if (isPaused)
+                {
 
-                StackPanel myStackPanel = new StackPanel();
-                myStackPanel.Orientation = Orientation.Horizontal;
-                Image img = new Image();
-                img.Source = new BitmapImage(new Uri("Resources/Media Pause.png", UriKind.Relative));
+                    StackPanel myStackPanel = new StackPanel();
+                    myStackPanel.Orientation = Orientation.Horizontal;
+                    Image img = new Image();
+                    img.Source = new BitmapImage(new Uri("Resources/Media Pause.png", UriKind.Relative));
 
-                img.Height = 22;
-                img.Width = 37;
-                myStackPanel.Children.Add(img);
+                    img.Height = 22;
+                    img.Width = 37;
+                    myStackPanel.Children.Add(img);
 
-                button_playPause.Content = myStackPanel;
+                    button_playPause.Content = myStackPanel;
 
-                num = dataGridView1.SelectedIndex;
-               
+                    num = dataGridView1.SelectedIndex;
+
                     playSelectedAudio(num);
-                isPaused = false;
+                    isPaused = false;
 
 
+                }
+                else
+                {
+                    num = dataGridView1.SelectedIndex;
+
+                    playSelectedAudio(num);
+                }
             }
             else
             {
-                num = dataGridView1.SelectedIndex;
-
-                playSelectedAudio(num);
+                MessageBox.Show("Сначала нужно авторизоваться", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
 
@@ -755,10 +853,16 @@ namespace Загрузка_музыки_из_VK
 
         private void textBox_searchGlobalAudio_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
+            if (e.Key == Key.Enter&&isAuthorised)
             {
                 button_find_Click(sender, null);
             }
+        }
+
+        private void Button_About_Click(object sender, RoutedEventArgs e)
+        {
+            About_program ap = new About_program();
+            ap.ShowDialog();
         }
 
   

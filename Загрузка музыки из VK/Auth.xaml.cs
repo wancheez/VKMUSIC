@@ -101,11 +101,12 @@ namespace Загрузка_музыки_из_VK
             webBrowser_Auth.Navigate(String.Format("http://api.vkontakte.ru/oauth/authorize?client_id={0}&scope={1}&display=popup&response_type=token", appId, scope));
             else
             {
-                webBrowser_Auth.Navigate(String.Format("http://api.vkontakte.ru/oauth/authorize?client_id={0}&scope={1}&display=popup&response_type=token", appId, scope));
+               // webBrowser_Auth.Navigate(String.Format("http://api.vkontakte.ru/oauth/authorize?client_id={0}&scope={1}&display=popup&response_type=token", appId, scope));
                 //webBrowser_Auth.Navigate("javascript:void((function(){var a,b,c,e,f;f=0;a=document.cookie.split('; ');for(e=0;e<a.length&&a[e];e++){f++;for(b='.'+location.host;b;b=b.replace(/^(?:%5C.|[^%5C.]+)/,'')){for(c=location.pathname;c;c=c.replace(/.$/,'')){document.cookie=(a[e]+'; domain='+b+'; path='+c+'; expires='+new Date((new Date()).getTime()-1e11).toGMTString());}}}})())");
                 //Пытаемся разлогиниться
                 File.Delete("userID.txt");
-                File.Create("userID.txt");
+                //File.Create("userID.txt");
+                
                 MainWindow main = this.Owner as MainWindow;
                 main.isAuthorised = false;
                 this.Close();
@@ -142,9 +143,14 @@ namespace Загрузка_музыки_из_VK
                     main.userId = userId;
                     main.accessToken = accessToken;
                     main.isAuthorised = true;//Авторизация прошла успешна. Метка для основной формы
+                    /*
                     if (!Directory.Exists(Environment.GetEnvironmentVariable("appdata") + "\\VKPLAYER"))
                         Directory.CreateDirectory(Environment.GetEnvironmentVariable("appdata") + "\\VKPLAYER");
                     StreamWriter write_text = new StreamWriter(Environment.GetEnvironmentVariable("appdata") + "\\VKPLAYER\\userID.txt", false);
+                     */
+                    if (!File.Exists("userID.txt"))
+                        File.Create("userID.txt");
+                    StreamWriter write_text = new StreamWriter("userID.txt", false);
                     //write_text = main.file.AppendText();
                     write_text.WriteLine(accessToken.ToString());
                     write_text.WriteLine(userId.ToString());
