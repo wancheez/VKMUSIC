@@ -36,6 +36,7 @@ namespace Загрузка_музыки_из_VK
             XmlDocument result = new XmlDocument();
             try
             {
+                
                 result.Load(String.Format("https://api.vkontakte.ru/method/{0}.xml?access_token={1}&{2}", name, accessToken, String.Join("&", from item in qs.AllKeys select item + "=" + qs[item])));
             }
             catch (System.Net.WebException)

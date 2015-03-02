@@ -32,7 +32,9 @@
         </Grid.RowDefinitions>
 
         <!--Здесь начинается описание того, что на экране-->
-        <DataGrid x:Name="dataGridView1" IsReadOnly="True" HeadersVisibility="None" Grid.Row="0"  Margin="10,71,10,10" Grid.ColumnSpan="3" AutoGenerateColumns="False" CanUserAddRows="False" Background="#FFF0F0F0" TabIndex="7" HorizontalGridLinesBrush="#FF486288" VerticalGridLinesBrush="{x:Null}">
+        <DataGrid x:Name="dataGridView1" IsReadOnly="True" HeadersVisibility="None" Grid.Row="0"  Margin="10,71,10,10" Grid.ColumnSpan="3" AutoGenerateColumns="False" CanUserAddRows="False" Background="#FFF0F0F0" TabIndex="7" HorizontalGridLinesBrush="#FF486288" VerticalGridLinesBrush="{x:Null}"
+                  ScrollViewer.ScrollChanged="dataGridView1_ScrollChanged">
+            
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Play" Width="40" CellTemplate="{StaticResource ButtonTemplate}" />
                 <DataGridTextColumn  Header="Artist" Width="*" Binding="{Binding artist}" />
@@ -85,7 +87,7 @@
             </StackPanel>
         </Button>
 
-        <ProgressBar x:Name="progressBar_download" Visibility="Hidden" Margin="10,0,59,90" RenderTransformOrigin="0.58,1" Grid.ColumnSpan="3" Height="20" VerticalAlignment="Bottom" Grid.Row="1"/>
+        <ProgressBar x:Name="progressBar_download"  Visibility="Hidden" Margin="10,0,59,90" RenderTransformOrigin="0.58,1" Grid.ColumnSpan="3" Height="20" VerticalAlignment="Bottom" Grid.Row="1"/>
         <Button Grid.Column="2" Margin="0,0,10,89" HorizontalAlignment="Right" Width="45" Click="button_moreOffset_Click" Height="25" VerticalAlignment="Bottom" Grid.Row="1">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

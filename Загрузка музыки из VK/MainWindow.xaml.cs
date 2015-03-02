@@ -73,7 +73,7 @@ namespace Загрузка_музыки_из_VK
             //Инициализация таймера
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += timer_Tick;
-           
+            
             //Привязываем события к клиенту
             client.DownloadFileCompleted +=client_DownloadFileCompleted;
             client.DownloadProgressChanged += client_DownloadProgressChanged;
@@ -863,6 +863,39 @@ namespace Загрузка_музыки_из_VK
         {
             About_program ap = new About_program();
             ap.ShowDialog();
+        }
+
+        private void dataGridView1_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+
+            if (dataGridView1.Items.Count > 0)
+            {
+                var border = VisualTreeHelper.GetChild(dataGridView1, 0) as Decorator;
+                if (border != null)
+                {
+                    var scroll = border.Child as ScrollViewer;
+                    if (scroll.ScrollableHeight == e.VerticalOffset)
+                    {
+                        if (isAuthorised)
+                        {
+                            this.Cursor = Cursors.Wait;
+                            currentOffset += N;
+                            if (searchUserAudio)
+                            {
+                                getAudioFunc(N, currentOffset);
+                            }
+                            else
+                            {
+                                getGlobalAudioFunc(N, currentOffset, textBox_searchGlobalAudio.Text);
+                            }
+                            this.Cursor = Cursors.Arrow;
+                            System.Threading.Thread.Sleep(1);
+                        }
+                    }
+                }
+            }
+            //var scrollViewer = (ScrollViewer)(VisualTreeHelper.GetChild(dataGridView1, 0)); ;
+            
         }
 
   
