@@ -55,7 +55,7 @@ namespace Загрузка_музыки_из_VK
         bool searchUserAudio = true; //Искать по записям пользователя. Если false, ищем глобально по сети
         XmlDocument profileXml;
         int currentOffset = 0;
-        const int N = 20;
+        const int N = 10;
         List<audioItems> currentAudioList = new List<audioItems>(); //Список записей, которые сейчас отображены
         List<audioItems> audioToDownload = new List<audioItems>();//Список аудиозаписей, которые нужно скачать
         WebClient client;
@@ -64,9 +64,13 @@ namespace Загрузка_музыки_из_VK
         DispatcherTimer timer = new DispatcherTimer(); //Таймер для работы слайдера и вывода времени проигрывания. Пока проще выхода не придумал
         TimeSpan TotalTime;
         byte currentCatalog = 0; //Мои записи - 0/Популярное - 1/Рекомендации - 2/Поиск - 3
+        string userName;
+        bool loading = false;
+        double firstyWindowHeight;
 
         public MainWindow()
         {
+            loading = true;
             InitializeComponent();
             client = new WebClient();
             dataGridView1.ItemsSource = currentAudioList;
@@ -95,8 +99,7 @@ namespace Загрузка_музыки_из_VK
                     vkApiClass = new VKAPI(appId, accessToken);
                     
                     XmlDocument profileXml;
-                    string userName = "";
-                    profileXml = vkApiClass.getProfile(userId);
+                    profileXml = vkApiClass.getProfile(userId);//TODO Рядом с кнопкой авторизации вывести имя и фамилию вместо слова Auhorized
                     userName = GetDataFromXmlNode(profileXml.SelectSingleNode("response/user/first_name")) + " " + GetDataFromXmlNode(profileXml.SelectSingleNode("response/user/last_name"));
 
                     if (!(userName == "нет данных нет данных"))
@@ -105,7 +108,7 @@ namespace Загрузка_музыки_из_VK
 
                         //Разукрашиваем кнопку авторизации
                         Color_AuthButton(true);
-                        profileXml = vkApiClass.getProfile(userId);//TODO Рядом с кнопкой авторизации вывести имя и фамилию вместо слова Auhorized
+                       
                         isAuthorised = true;
                         getAudioFunc();
                         try
@@ -125,6 +128,8 @@ namespace Загрузка_музыки_из_VK
                 }
                 streamReader.Close();
             }
+            firstyWindowHeight = this.Height;
+            //loading = false;
         }
        
         /// <summary>
@@ -169,6 +174,7 @@ namespace Загрузка_музыки_из_VK
                
                 myLinearGradientBrush.GradientStops.Add(
                     new GradientStop((Color)ColorConverter.ConvertFromString("#FF455D83"), 1));
+                //txt.Text =GetDataFromXmlNode(vkApiClass.getProfile(userId).SelectSingleNode("response/user/first_name")) + " " + GetDataFromXmlNode(vkApiClass.getProfile(userId).SelectSingleNode("response/user/last_name")); 
                 txt.Text = "Authorised";
                
             }
@@ -183,17 +189,29 @@ namespace Загрузка_музыки_из_VK
             StackPanel myStackPanel = new StackPanel();
             myStackPanel.Orientation = Orientation.Horizontal;
             Image img = new Image();
+            /*
             img.Source = new BitmapImage(new Uri("Resources/Login-01.png", UriKind.Relative));
             img.Width = 21;
             img.Height = 16;
-            myStackPanel.Children.Add(img);
-            
-           
+             */
+            DrawingImage di = new DrawingImage();
+            Pen pen= new Pen(Brushes.Black, 10);
+   
+            GeometryDrawing geom = new GeometryDrawing();
+            geom.Brush = Brushes.White;
+            geom.Geometry = Geometry.Parse("M23.104071,28.527C23.783672,30.139721,24.661274,31.64304,25.672976,33.045959L6.1626358,52.557308C5.3109837,53.410118 5.3123531,54.798935 6.1652355,55.651146 7.0154877,56.502056 8.4060497,56.502056 9.2576818,55.651146L28.558481,36.346802C30.955587,38.615128,33.833193,40.376751,37.025999,41.465466L37.025999,44.934811C37.025999,46.033024,36.130097,46.930336,35.031196,46.930336L29.542884,46.930336 29.542884,52.418606C29.542884,53.51762,28.647082,54.414131,27.548079,54.414131L22.059769,54.414131 22.059769,59.9025C22.059768,61.001415,21.162666,61.897926,20.063663,61.897926L14.472452,61.897926 13.07935,63.291145C12.227648,64.143456 3.6833897,64.59446 1.544035,62.457832 -0.59527969,60.319107 -0.14346504,51.773499 0.70950317,50.920685z M50.746134,6.7629433C47.162842,6.7629433 44.257851,9.6692162 44.257851,13.24983 44.257851,16.835785 47.162842,19.741947 50.746134,19.741947 54.330822,19.741947 57.237015,16.835785 57.237015,13.24983 57.237015,9.6692162 54.330822,6.7629433 50.746134,6.7629433z M44.510548,0C55.27342,0 64,8.7238588 64,19.48875 64,30.251614 55.27342,38.978001 44.510548,38.978001 33.747477,38.978001 25.020999,30.251614 25.021,19.48875 25.020999,8.7238588 33.747477,0 44.510548,0z");
+            DrawingImage MyFirstGeometryImage = new DrawingImage(geom);
+            img.Source = MyFirstGeometryImage;
+            img.Width = 21;
+            img.Height = 21;
+            myStackPanel.Children.Add(img);                       
             txt.Foreground = Brushes.White;
             txt.Background = Brushes.Transparent;
             txt.FontSize = 14;
+            txt.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
             myStackPanel.Children.Add(txt);
             button_auth.Content = myStackPanel;
+
         }
 
         /// <summary>
@@ -300,15 +318,14 @@ namespace Загрузка_музыки_из_VK
         {
             if (isAuthorised)
             {
-                if (currentCatalog != 3)
-                {
+               
                     currentCatalog = 3;
                     currentAudioList.Clear();
                     if (textBox_searchGlobalAudio.Text != "")
                     {
                         getGlobalAudioFunc(N, 0, textBox_searchGlobalAudio.Text);
                     }
-                }
+                
             }
             else
             {
@@ -868,7 +885,8 @@ namespace Загрузка_музыки_из_VK
         private void dataGridView1_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
 
-            if (dataGridView1.Items.Count > 0)
+
+            if (dataGridView1.Items.Count > 0&&!loading)
             {
                 var border = VisualTreeHelper.GetChild(dataGridView1, 0) as Decorator;
                 if (border != null)
@@ -879,23 +897,34 @@ namespace Загрузка_музыки_из_VK
                         if (isAuthorised)
                         {
                             this.Cursor = Cursors.Wait;
-                            currentOffset += N;
+                            currentOffset += 5;
                             if (searchUserAudio)
                             {
                                 getAudioFunc(N, currentOffset);
                             }
                             else
                             {
-                                getGlobalAudioFunc(N, currentOffset, textBox_searchGlobalAudio.Text);
+                                getGlobalAudioFunc(5, currentOffset, textBox_searchGlobalAudio.Text);
                             }
                             this.Cursor = Cursors.Arrow;
-                            System.Threading.Thread.Sleep(1);
+                            System.Threading.Thread.Sleep(5);
                         }
                     }
                 }
             }
             //var scrollViewer = (ScrollViewer)(VisualTreeHelper.GetChild(dataGridView1, 0)); ;
             
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if(!loading) dataGridView1.Height = 
+            MainGrid.RowDefinitions[1].ActualHeight-10;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e){
+
+            loading = false;
         }
 
   

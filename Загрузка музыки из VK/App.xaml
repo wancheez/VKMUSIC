@@ -143,9 +143,9 @@
                            <!-- <Rectangle Stroke="#FF5C7A99" Fill="#FF5C7A99" Height="20" Width="10" >                                
                                 
                                 </Rectangle>-->
-                            <Rectangle Fill="#FF5C7A99" Height="20" Width="10" >
+                            <Ellipse Fill="#FF5C7A99" Height="15" Width="15" >
 
-                            </Rectangle>
+                            </Ellipse>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -159,7 +159,7 @@
                             <!-- <Rectangle Stroke="#FF5C7A99" Fill="#FF5C7A99" Height="20" Width="10" >                                
                                 
                                 </Rectangle>-->
-                            <Rectangle Fill="#FF5C7A99" Height="10" Width="10" >
+                            <Rectangle Fill="#FF5C7A99" Height="7" Width="7" >
 
                             </Rectangle>
                         </ControlTemplate>
@@ -181,10 +181,10 @@
                                     </Grid.RowDefinitions>
                                     <Track x:Name="PART_Track" Grid.Row="1">
                                         <Track.DecreaseRepeatButton>
-                                            <RepeatButton BorderBrush="Transparent" Background="#FF5C7A99" BorderThickness="0" Command="{x:Static Slider.DecreaseLarge}"/>
+                                            <RepeatButton BorderBrush="Transparent" Background="#FF5C7A99" BorderThickness="0" Height="7"  Command="{x:Static Slider.DecreaseLarge}"/>
                                         </Track.DecreaseRepeatButton>
                                         <Track.IncreaseRepeatButton>
-                                            <RepeatButton  BorderBrush="Transparent" Background="#FFBAC7D4" BorderThickness="0" Command="{x:Static Slider.IncreaseLarge}"/>
+                                            <RepeatButton  BorderBrush="Transparent" Background="#FFBAC7D4" BorderThickness="0" Height="7" Command="{x:Static Slider.IncreaseLarge}"/>
                                         </Track.IncreaseRepeatButton>
                                         <Track.Thumb>
                                             <Thumb x:Name="Thumb" Style="{StaticResource CustomThumbForSlider}" />
