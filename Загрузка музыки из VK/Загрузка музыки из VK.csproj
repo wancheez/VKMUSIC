@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>myicon.ico</ApplicationIcon>
+    <ApplicationIcon>Mezhdunarodny_logotip_VK.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -120,60 +120,40 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\play-active11.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="myicon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Download.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Resources\Mezhdunarodny_logotip_VK.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Search-Find.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Mezhdunarodny_logotip_VK.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Login-01.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\House.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\star.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\ThumbsUp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Arrow next.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Media Next1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Media Next2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Media-Play1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\myicon.png" />
+    <Resource Include="Resources\Mezhdunarodny_logotip_VK.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Media Pause.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Media-Play1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Media Next2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Media Next1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Download.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\play-active11.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Resources\Volume11.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\About.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="myicon.ico" />
+    <Resource Include="Resources\VK.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

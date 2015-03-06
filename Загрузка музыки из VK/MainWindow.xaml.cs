@@ -46,6 +46,9 @@ namespace Загрузка_музыки_из_VK
             
         }
         }
+
+       
+
         static private int appId = 4201412;
         Auth auth;
         VKAPI vkApiClass;
@@ -75,9 +78,12 @@ namespace Загрузка_музыки_из_VK
             client = new WebClient();
             dataGridView1.ItemsSource = currentAudioList;
             //Инициализация таймера
-            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Interval = TimeSpan.FromSeconds(0.1);
             timer.Tick += timer_Tick;
-            
+            //События клика по slider, чтобы можно было нормально мотать
+            TimeSlider.AddHandler(MouseLeftButtonDownEvent, new MouseButtonEventHandler(Slider_MouseLeftButtonDown), true);
+            TimeSlider.AddHandler(MouseLeftButtonUpEvent, new MouseButtonEventHandler(Slider_MouseLeftButtonUp), true);
+
             //Привязываем события к клиенту
             client.DownloadFileCompleted +=client_DownloadFileCompleted;
             client.DownloadProgressChanged += client_DownloadProgressChanged;
@@ -258,7 +264,7 @@ namespace Загрузка_музыки_из_VK
                 switch (currentCatalog)
                 {
                     case 0: audioXml = vkApiClass.getAudio(userId, count, offset); break;
-                    case 1: audioXml = vkApiClass.audioGetPopular(userId, count, offset); break;
+                    case 1: audioXml = vkApiClass.audioGetPopular(userId, 50, offset); break;
                     case 2: audioXml = vkApiClass.audiogetRecommendations(userId, count, offset); break;
                     default: audioXml = vkApiClass.getAudio(userId, count, offset); break;
                 }
@@ -897,15 +903,30 @@ namespace Загрузка_музыки_из_VK
                         if (isAuthorised)
                         {
                             this.Cursor = Cursors.Wait;
-                            currentOffset += 5;
+                           
+                            
                             if (searchUserAudio)
                             {
-                                getAudioFunc(N, currentOffset);
+                                switch (currentCatalog){
+                                    case 0: { currentOffset += 10; getAudioFunc(20, currentOffset); break; }
+                                    case 1: { currentOffset += 50; getAudioFunc(50, currentOffset); break; }
+                                    case 2: { currentOffset += 50; getAudioFunc(50, currentOffset); break; }
+                                    case 3:
+                                        {
+                                            currentOffset += 10;
+                                            getGlobalAudioFunc(10, currentOffset, textBox_searchGlobalAudio.Text);
+                                            break;
+                                        }
+                                }
+                                
                             }
                             else
                             {
+                                currentOffset += 5;
                                 getGlobalAudioFunc(5, currentOffset, textBox_searchGlobalAudio.Text);
                             }
+                             
+                            
                             this.Cursor = Cursors.Arrow;
                             System.Threading.Thread.Sleep(5);
                         }
@@ -926,6 +947,24 @@ namespace Загрузка_музыки_из_VK
 
             loading = false;
         }
+
+
+
+
+        private void Slider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            timer.Tick += timer_Tick;
+        }
+
+        
+        private void Slider_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            timer.Tick -= timer_Tick;
+            
+        }
+
+       
+       
 
   
     }
