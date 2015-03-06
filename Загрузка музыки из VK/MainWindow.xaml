@@ -265,7 +265,7 @@
                             </DrawingImage>
                         </Image.Source>
                     </Image>
-                    <TextBlock  Text="Reccomend" Width="75"  Foreground="White" FontSize="14" Height="15" Margin="3,0,0,0"/>
+                    <TextBlock  Text="Reccomend" Width="75"  Foreground="White" FontSize="14" Height="16" Margin="3,0,0,0"/>
                 </StackPanel>
             </Button>
             <TextBox x:Name="textBox_searchGlobalAudio" Margin="94,32,0,0" TextWrapping="Wrap" ToolTip="Typе here artist or music name" Height="23"  VerticalAlignment="Top" KeyUp="textBox_searchGlobalAudio_KeyUp" />

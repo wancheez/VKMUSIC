@@ -434,9 +434,9 @@ namespace Загрузка_музыки_из_VK
             if (fb.ShowDialog() == System.Windows.Forms.DialogResult.OK) //Если пользователь не выберет папку, загрузка не начнется
             {
                 downloadAdress = fb.SelectedPath;
-                
-            
-            for (int i = audioToDownload.Count; i < currentAudioList.Count; i++)
+
+
+                for (int i = 0; i < currentAudioList.Count; i++)
             {
                 if (currentAudioList[i].audioChecked)
                 {
@@ -919,7 +919,7 @@ namespace Загрузка_музыки_из_VK
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if(!loading) dataGridView1.Height = 
-            MainGrid.RowDefinitions[1].ActualHeight-10;
+            MainGrid.RowDefinitions[1].ActualHeight-20;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e){
