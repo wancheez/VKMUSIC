@@ -963,6 +963,12 @@ namespace Загрузка_музыки_из_VK
             
         }
 
+        private void Button_Friends_Click(object sender, RoutedEventArgs e)
+        {
+            FriendsList fl = new FriendsList();
+            fl.ShowDialog();
+        }
+
        
        
 

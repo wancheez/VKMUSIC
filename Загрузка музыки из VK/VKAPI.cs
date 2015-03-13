@@ -159,7 +159,7 @@ namespace Загрузка_музыки_из_VK
         }
 
         /// <summary>
-        /// Получает друзей
+        /// Возвращает список идентификаторов друзей пользователя или расширенную информацию о друзьях пользователя (при использовании параметра fields).
         /// </summary>
         /// <param name="uid">id владельца</param>
         /// <param name="count">Количество выдаваемых записей</param>
@@ -167,7 +167,7 @@ namespace Загрузка_музыки_из_VK
         /// <param name="fields">список дополнительных полей, которые необходимо вернуть.Доступные значения: nickname, domain, sex, bdate, city, country, timezone, photo_50, photo_100, photo_200_orig, has_mobile, contacts, education, online, relation, last_seen, status, can_write_private_message, can_see_all_posts, can_post, universities список строк, разделенных через запятую </param>
         /// <param name="order">Порядок, в котором нужно вернуть список друзей: name - сортировать по имени,hints - сортировать по рейтингу, random - случайно</param>
         /// <returns></returns>
-        public XmlDocument getFriends(int uid, int count, int offset,string order="name", string fields="")
+        public XmlDocument getFriends(int uid, int count, int offset, string order = "hints", string fields = "")
         {
             NameValueCollection qs = new NameValueCollection();
             qs["uid"] = uid.ToString();
