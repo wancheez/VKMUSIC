@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Загрузка_музыки_из_VK
 {
-    class VKAPI
+    public class VKAPI
     {   
         //Идентификатор приложения Вконтаке
         private int appId;

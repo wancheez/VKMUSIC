@@ -49,9 +49,9 @@ namespace Загрузка_музыки_из_VK
 
        
 
-        static private int appId = 4201412;
+        static public int appId = 4201412;
         Auth auth;
-        VKAPI vkApiClass;
+        public VKAPI vkApiClass;
         public string accessToken = "";
         public int userId = 0;
         public bool isAuthorised = false;
@@ -66,10 +66,11 @@ namespace Загрузка_музыки_из_VK
         int num = 0; //Переменная используется, чтобы при окончании трека запускался следующий. В переменной хранится смещение от первой композиции
         DispatcherTimer timer = new DispatcherTimer(); //Таймер для работы слайдера и вывода времени проигрывания. Пока проще выхода не придумал
         TimeSpan TotalTime;
-        byte currentCatalog = 0; //Мои записи - 0/Популярное - 1/Рекомендации - 2/Поиск - 3
+        byte currentCatalog = 0; //Мои записи - 0/Популярное - 1/Рекомендации - 2/Поиск - 3/Друзья - 4
         string userName;
         bool loading = false;
         double firstyWindowHeight;
+        int friendID;
 
         public MainWindow()
         {
@@ -292,12 +293,53 @@ namespace Загрузка_музыки_из_VK
             else MessageBox.Show("Сначала нужно авторизоваться", "Ошибка", MessageBoxButton.OK,MessageBoxImage.Exclamation);
         }
 
+
+        /// <summary>
+        /// Получить и вывести в таблицу аудиозаписи пользователя
+        /// </summary>
+        /// <param name="count"></param>
+        /// <param name="offset"></param>
+        private void getAudioFuncAnotherUser(int user, int count = 20, int offset = 0)
+        {
+            XmlNodeList nodeList;
+            //item.Clear();
+            List<audioItems> currentAudioList1 = new List<audioItems>(); //Временная переменная, чтобы обновлять содержимое таблицы
+            //currentAudioList1 = currentAudioList;
+            if (isAuthorised)
+            {
+                XmlDocument audioXml;
+                audioXml = vkApiClass.getAudio(user, count, offset);
+
+                nodeList = audioXml.SelectNodes("response/audio");
+                for (int i = 0; i < nodeList.Count; i++)
+                {
+                    audioItems audioIte = new audioItems();
+                    audioIte.title = ProcessSpecialSymbols(GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("title")));
+                    audioIte.artist = ProcessSpecialSymbols(GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("artist")));
+                    String t_dur = GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("duration"));
+                    int t_min = Convert.ToInt32(t_dur) / 60;
+                    int t_sec = Convert.ToInt32(t_dur) - t_min * 60;
+                    audioIte.duration = Convert.ToString(t_min) + ":" + Convert.ToString(t_sec).PadLeft(2, '0');
+
+                    audioIte.source = GetDataFromXmlNode(nodeList.Item(i).SelectSingleNode("url"));
+
+                    currentAudioList.Add(audioIte);
+                }
+                double curTableHeight = dataGridView1.ActualHeight;//Сохраняем текущую высоту таблицы, чтоб после обновления она не растягивалась
+                dataGridView1.ItemsSource = null;
+                dataGridView1.ItemsSource = currentAudioList;
+                if (curTableHeight != 0.0)
+                    dataGridView1.Height = curTableHeight;
+            }
+            else MessageBox.Show("Сначала нужно авторизоваться", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+        }
+
         /// <summary>
         /// Исправляет специальные символы из xml на их обычный эквивалент
         /// </summary>
         /// <param name="sourceString">Исходная строка</param>
         /// <returns></returns>
-        private string ProcessSpecialSymbols(string sourceString)
+        public static string ProcessSpecialSymbols(string sourceString)
         {           
             sourceString = sourceString.Replace("&lt;", "<");
             sourceString = sourceString.Replace("&gt;", ">");
@@ -308,7 +350,7 @@ namespace Загрузка_музыки_из_VK
         }
 
         //Функция позволяет избежать ошибок, если запрашиваемое поле пусто. Это для XML
-        public string GetDataFromXmlNode(XmlNode input)
+        public static string GetDataFromXmlNode(XmlNode input)
         {
             if (input == null || String.IsNullOrEmpty(input.InnerText))
             {
@@ -871,7 +913,7 @@ namespace Загрузка_музыки_из_VK
             dataStream.Close();
             WebResponse response = request.GetResponse();
             Stream data = response.GetResponseStream();
-            int x;
+           
         }
 
         private void textBox_searchGlobalAudio_KeyUp(object sender, KeyEventArgs e)
@@ -898,7 +940,7 @@ namespace Загрузка_музыки_из_VK
                 if (border != null)
                 {
                     var scroll = border.Child as ScrollViewer;
-                    if (scroll.ScrollableHeight == e.VerticalOffset)
+                    if (scroll.ScrollableHeight == e.VerticalOffset )
                     {
                         if (isAuthorised)
                         {
@@ -915,6 +957,12 @@ namespace Загрузка_музыки_из_VK
                                         {
                                             currentOffset += 10;
                                             getGlobalAudioFunc(10, currentOffset, textBox_searchGlobalAudio.Text);
+                                            break;
+                                        }
+                                    case 4:
+                                        {
+                                            currentOffset += 20;
+                                            getAudioFuncAnotherUser(friendID, 10, currentOffset);
                                             break;
                                         }
                                 }
@@ -965,12 +1013,24 @@ namespace Загрузка_музыки_из_VK
 
         private void Button_Friends_Click(object sender, RoutedEventArgs e)
         {
-            FriendsList fl = new FriendsList();
-            fl.ShowDialog();
+            FriendsList fl = new FriendsList(this);
+            var resultDialog = fl.ShowDialog();
+            if (resultDialog == true)
+            {
+                friendID = fl.ReturnValueID;
+                    currentCatalog = 4;
+                    currentAudioList.Clear();
+                    currentOffset = 0;
+                    
+                    textBox_searchGlobalAudio.Text = "";
+                    getAudioFuncAnotherUser(friendID, 10, currentOffset);                                           
+            }
         }
 
        
-       
+
+
+
 
   
     }

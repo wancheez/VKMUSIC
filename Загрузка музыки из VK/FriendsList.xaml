@@ -1,9 +1,25 @@
 ﻿<Window x:Class="Загрузка_музыки_из_VK.FriendsList"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="FriendsList" Height="300" Width="300">
+        Title="FriendsList" Height="500" Width="350">
     <Grid>
-        <ListBox/>
+        <DataGrid Name="DataGridFriends"  Margin="8,10,11,10" AutoGenerateColumns="False" HeadersVisibility="None" CanUserAddRows="False" Background="#FFF0F0F0"
+                  HorizontalGridLinesBrush="#FF486288" VerticalGridLinesBrush="{x:Null}" HorizontalScrollBarVisibility="Disabled" 
+                  VerticalScrollBarVisibility="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinWidth="300" ScrollViewer.ScrollChanged="DataGridFriends_ScrollChanged"
+                  SelectionMode="Single" SelectedCellsChanged="DataGridFriends_SelectedCellsChanged" MouseUp="DataGridFriends_MouseUp">
+            <DataGrid.Columns>
 
+                <DataGridTemplateColumn Header="Photo" IsReadOnly="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding photo50Source}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn  Header="First_name" Width="*" FontSize="15" Binding="{Binding first_name}" />
+                <DataGridTextColumn Header="Last_name" Width="*" FontSize="15" Binding="{Binding last_name}" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
